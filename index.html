@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Manufacturing Blog — 6E7V0013</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0f0f0f;
+    --white: #fafaf8;
+    --gray-100: #f4f4f0;
+    --gray-200: #e8e8e2;
+    --gray-400: #b0b0a8;
+    --gray-600: #6b6b63;
+    --accent: #1a1a2e;
+    --accent-light: #e8e8f4;
+    --ink: #1c1c1c;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--black);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; letter-spacing: 0.04em;
+    color: var(--gray-600); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  /* HERO */
+  .hero {
+    padding: 140px 40px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray-600); font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--gray-400);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gray-600); }
+  .hero-sub {
+    font-size: 18px; font-weight: 300; color: var(--gray-600);
+    max-width: 560px; line-height: 1.7; margin-bottom: 40px;
+  }
+  .hero-meta {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    padding-top: 32px;
+    border-top: 1px solid var(--gray-200);
+  }
+  .hero-meta-item { }
+  .hero-meta-item .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--gray-400); font-weight: 500; margin-bottom: 4px;
+  }
+  .hero-meta-item .value {
+    font-size: 14px; color: var(--ink); font-weight: 400;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    max-width: 900px; margin: 0 auto;
+    border: none; border-top: 1px solid var(--gray-200);
+  }
+
+  /* POSTS GRID */
+  .posts-section {
+    max-width: 900px; margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .posts-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 28px; letter-spacing: -0.02em; color: var(--black);
+  }
+  .posts-count {
+    font-size: 12px; color: var(--gray-400); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  .posts-list { display: flex; flex-direction: column; gap: 0; }
+
+  .post-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--gray-200);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+  .post-item:first-child { border-top: 1px solid var(--gray-200); }
+  .post-item:hover .post-item-title { color: var(--gray-600); }
+  .post-item:hover .post-arrow { transform: translateX(4px); }
+
+  .post-num {
+    font-family: var(--serif); font-size: 13px; font-style: italic;
+    color: var(--gray-400); padding-top: 3px;
+  }
+  .post-item-tag {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray-400); font-weight: 500; margin-bottom: 6px;
+  }
+  .post-item-title {
+    font-family: var(--serif); font-size: 22px; line-height: 1.2;
+    letter-spacing: -0.01em; color: var(--black); margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+  .post-item-desc {
+    font-size: 14px; color: var(--gray-600); line-height: 1.6;
+    font-weight: 300;
+  }
+  .post-arrow {
+    font-size: 20px; color: var(--gray-400); padding-top: 6px;
+    transition: transform 0.2s;
+  }
+
+  /* ABOUT SECTION */
+  .about-section {
+    background: var(--gray-100);
+    padding: 60px 40px;
+    margin-top: 20px;
+  }
+  .about-inner {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: start;
+  }
+  .about-section h2 {
+    font-family: var(--serif); font-size: 32px;
+    letter-spacing: -0.02em; margin-bottom: 16px; color: var(--black);
+  }
+  .about-section p {
+    font-size: 15px; color: var(--gray-600); line-height: 1.7; font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .module-details { }
+  .detail-row {
+    display: flex; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--gray-200);
+    font-size: 13px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-label { color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; font-weight: 500; padding-top: 2px; }
+  .detail-value { color: var(--ink); font-weight: 400; text-align: right; }
+
+  /* FOOTER */
+  footer {
+    max-width: 900px; margin: 0 auto;
+    padding: 32px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--gray-200);
+  }
+  footer p { font-size: 12px; color: var(--gray-400); }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .hero { padding: 120px 20px 60px; }
+    .posts-section { padding: 40px 20px; }
+    .post-item { grid-template-columns: 1fr; gap: 8px; }
+    .post-num { display: none; }
+    .post-arrow { display: none; }
+    .about-inner { grid-template-columns: 1fr; gap: 32px; }
+    .about-section { padding: 40px 20px; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">DM Blog</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#posts">Posts</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">6E7V0013 — Digital Manufacturing</div>
+  <h1>Manufacturing <em>in the</em><br>Digital Age</h1>
+  <p class="hero-sub">A reflective blog documenting the design, manufacture, and simulation of mobile phone casings for Phones-R-Us — exploring Industry 4.0 from print to assembly line.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="label">Module</div>
+      <div class="value">6E7V0013 Digital Manufacturing</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="label">Institution</div>
+      <div class="value">Manchester Metropolitan University</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="label">Submission</div>
+      <div class="value">13 May 2026</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="label">Student</div>
+      <div class="value">Your Name Here</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="posts-section" id="posts">
+  <div class="posts-header">
+    <h2 class="section-title">Blog Posts</h2>
+    <span class="posts-count">8 posts</span>
+  </div>
+
+  <div class="posts-list">
+
+    <a href="post1.html" class="post-item">
+      <div class="post-num">01</div>
+      <div>
+        <div class="post-item-tag">Introduction · Week 1</div>
+        <div class="post-item-title">The Brief: Manufacturing Casings for Phones-R-Us</div>
+        <div class="post-item-desc">An introduction to the module, the challenge, and my plan for the semester ahead.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post2.html" class="post-item">
+      <div class="post-num">02</div>
+      <div>
+        <div class="post-item-tag">3D Printing · Week 2–3</div>
+        <div class="post-item-title">Selecting a Process: 3D Printing the Phone Casing</div>
+        <div class="post-item-desc">Printer selection, print settings, failures, and the true cost of additive manufacturing at scale.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post3.html" class="post-item">
+      <div class="post-num">03</div>
+      <div>
+        <div class="post-item-tag">Metrology · Week 3–4</div>
+        <div class="post-item-title">Measurement & Quality: Does My Casing Meet the Drawing?</div>
+        <div class="post-item-desc">Dimensional inspection, process capability, and what variability means for a multi-supplier world.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post4.html" class="post-item">
+      <div class="post-num">04</div>
+      <div>
+        <div class="post-item-tag">FESTO Lab · Week 4–5</div>
+        <div class="post-item-title">Inside the Assembly Line: Observing the FESTO CP Lab</div>
+        <div class="post-item-desc">Six stations, cycle times, and identifying the bottleneck that determines maximum output.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post5.html" class="post-item">
+      <div class="post-num">05</div>
+      <div>
+        <div class="post-item-tag">Plant Simulation · Week 5–7</div>
+        <div class="post-item-title">Building the Virtual Factory in Tecnomatix</div>
+        <div class="post-item-desc">Step by step: how I modelled the FESTO line in Plant Simulation and what the initial results revealed.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post6.html" class="post-item">
+      <div class="post-num">06</div>
+      <div>
+        <div class="post-item-tag">Optimisation · Week 7–8</div>
+        <div class="post-item-title">From 9,030 to 52,220: Optimising the Simulation</div>
+        <div class="post-item-desc">How adding a real 3D printer cycle time exposed a critical bottleneck — and how I solved it.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post7.html" class="post-item">
+      <div class="post-num">07</div>
+      <div>
+        <div class="post-item-tag">Testing · Week 8–9</div>
+        <div class="post-item-title">Putting the Casing to the Test on the Assembly Line</div>
+        <div class="post-item-desc">Does the printed casing actually fit? Testing on the real FESTO line and the challenges of supplier variability.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="post8.html" class="post-item">
+      <div class="post-num">08</div>
+      <div>
+        <div class="post-item-tag">Reflection · Week 9–10</div>
+        <div class="post-item-title">Lessons Learned: Digital Manufacturing in Practice</div>
+        <div class="post-item-desc">A final reflection on 3D printing, metrology, supplier variability, and the value of virtual factory modelling.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div>
+      <h2>About This Blog</h2>
+      <p>This blog documents my learning throughout the 6E7V0013 Digital Manufacturing module at Manchester Metropolitan University.</p>
+      <p>Over the course of the semester I took on the role of a manufacturer of plastic casings, producing prototypes using various 3D printers, measuring them for dimensional accuracy, testing them on the FESTO CP assembly line, and modelling the entire production process in Tecnomatix Plant Simulation.</p>
+      <p>The target: prove that 50,000 phones can be assembled per year.</p>
+    </div>
+    <div class="module-details">
+      <div class="detail-row">
+        <span class="detail-label">Module code</span>
+        <span class="detail-value">6E7V0013</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Assessment</span>
+        <span class="detail-value">2CWK60 — 60% of module</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Simulation target</span>
+        <span class="detail-value">50,000 phones/year</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Simulation result</span>
+        <span class="detail-value">52,220 phones/year ✓</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Software used</span>
+        <span class="detail-value">Tecnomatix Plant Simulation</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Deadline</span>
+        <span class="detail-value">13 May 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>6E7V0013 Digital Manufacturing — Manchester Metropolitan University</p>
+  <p>Your Name · 2026</p>
+</footer>
+
+</body>
+</html>

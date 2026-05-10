@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post 6: Optimising the Simulation — DM Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0f0f0f;--white:#fafaf8;--gray-100:#f4f4f0;--gray-200:#e8e8e2;--gray-400:#b0b0a8;--gray-600:#6b6b63;--ink:#1c1c1c;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.6;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,250,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);}
+  .nav-logo{font-family:var(--serif);font-size:18px;color:var(--black);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;font-weight:400;letter-spacing:0.04em;color:var(--gray-600);text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--black);}
+  .post-hero{padding:120px 40px 60px;max-width:760px;margin:0 auto;border-bottom:1px solid var(--gray-200);}
+  .back-link{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);text-decoration:none;font-weight:500;margin-bottom:36px;transition:color 0.2s;}
+  .back-link:hover{color:var(--black);}
+  .post-tag{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .post-tag::before{content:'';display:block;width:24px;height:1px;background:var(--gray-400);}
+  .post-hero h1{font-family:var(--serif);font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-0.02em;color:var(--black);margin-bottom:20px;}
+  .post-hero .intro{font-size:18px;font-weight:300;color:var(--gray-600);line-height:1.7;max-width:600px;}
+  .post-body{max-width:760px;margin:0 auto;padding:60px 40px 80px;}
+  .post-body h2{font-family:var(--serif);font-size:28px;letter-spacing:-0.01em;color:var(--black);margin:48px 0 16px;line-height:1.2;}
+  .post-body h3{font-size:14px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-600);margin:36px 0 12px;}
+  .post-body p{font-size:16px;color:var(--ink);line-height:1.8;font-weight:300;margin-bottom:20px;max-width:640px;}
+  .post-body strong{font-weight:500;color:var(--black);}
+  .img-placeholder{background:var(--gray-100);border:1px dashed var(--gray-200);border-radius:4px;padding:48px 24px;text-align:center;margin:32px 0;}
+  .img-placeholder .ph-icon{font-size:28px;margin-bottom:10px;opacity:0.3;}
+  .img-placeholder .ph-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);font-weight:500;}
+  .img-placeholder .ph-desc{font-size:13px;color:var(--gray-400);margin-top:4px;}
+  figcaption{font-size:12px;color:var(--gray-400);font-style:italic;text-align:center;margin-top:-24px;margin-bottom:32px;}
+  .video-placeholder{background:var(--black);border-radius:4px;padding:64px 24px;text-align:center;margin:32px 0;position:relative;overflow:hidden;}
+  .video-placeholder::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,0.01) 10px,rgba(255,255,255,0.01) 20px);}
+  .play-icon{width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:18px;color:rgba(255,255,255,0.5);position:relative;z-index:1;}
+  .video-placeholder .ph-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);font-weight:500;position:relative;z-index:1;}
+  .video-placeholder .ph-desc{font-size:13px;color:rgba(255,255,255,0.2);margin-top:4px;position:relative;z-index:1;}
+  .callout{border-left:2px solid var(--black);padding:16px 20px;margin:32px 0;background:var(--gray-100);}
+  .callout p{margin:0;font-size:15px;color:var(--ink);line-height:1.6;font-weight:300;}
+  .callout-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--gray-400);margin-bottom:8px;}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--gray-200);border:1px solid var(--gray-200);margin:32px 0;}
+  .stat-cell{background:var(--white);padding:20px;text-align:center;}
+  .stat-num{font-family:var(--serif);font-size:32px;color:var(--black);line-height:1;margin-bottom:4px;}
+  .stat-label{font-size:11px;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;}
+  .data-table{width:100%;border-collapse:collapse;font-size:14px;margin:32px 0;}
+  .data-table th{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-400);font-weight:500;text-align:left;padding:10px 16px;border-bottom:1px solid var(--gray-200);}
+  .data-table td{padding:12px 16px;border-bottom:1px solid var(--gray-100);color:var(--ink);font-weight:300;}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table .highlight td{font-weight:500;background:var(--gray-100);}
+  .table-caption{font-size:12px;color:var(--gray-400);font-style:italic;margin-top:-24px;margin-bottom:32px;}
+  .post-nav{max-width:760px;margin:0 auto;padding:32px 40px 60px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
+  .post-nav-link{text-decoration:none;color:inherit;font-size:13px;color:var(--gray-400);transition:color 0.2s;}
+  .post-nav-link:hover{color:var(--black);}
+  .post-nav-link .nav-dir{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .post-nav-link .nav-title{font-family:var(--serif);font-size:16px;color:var(--black);}
+  footer{max-width:760px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
+  footer p{font-size:12px;color:var(--gray-400);}
+  @media(max-width:640px){nav{padding:0 20px;}.post-hero,.post-body{padding-left:20px;padding-right:20px;}.post-nav{padding:24px 20px 40px;flex-direction:column;gap:20px;}footer{padding:20px;flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">DM Blog</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#posts">Posts</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+</nav>
+
+<section class="post-hero">
+  <a href="index.html" class="back-link">← All posts</a>
+  <div class="post-tag">Optimisation · Week 7–8</div>
+  <h1>From 9,030 to 52,220: Optimising the Simulation</h1>
+  <p class="intro">How adding a realistic 3D printer cycle time exposed a critical production bottleneck — and the step-by-step process of solving it.</p>
+</section>
+
+<div class="post-body">
+
+  <h2>The Problem: Adding the 3D Printer</h2>
+  <p>With the basic FESTO line model producing over 238,000 phones/year on a standard shift, I initially had significant spare capacity. However, the brief requires including the <strong>3D printer as the first stage</strong> of the process — the source of all the casings feeding into the assembly line.</p>
+  <p>My selected printer takes <strong>2 hours per casing</strong>. Adding this as an AM_Printing station feeding into the line had an immediate and dramatic effect on output. [Add your own description of what you observed when you first ran the simulation with the printer included.]</p>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-num">238k</div>
+      <div class="stat-label">Without printer</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">9,030</div>
+      <div class="stat-label">With 10 printers</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">52,220</div>
+      <div class="stat-label">Final result</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">67</div>
+      <div class="stat-label">Printers required</div>
+    </div>
+  </div>
+
+  <h2>Understanding the Bottleneck</h2>
+  <p>The bottleneck shifted entirely from the assembly line to the printing stage. A single printer produces one casing every 2 hours — on a standard 8-hour shift over 48 working weeks, that is just <strong>960 casings per printer per year</strong>. To reach 50,000 phones/year requires:</p>
+
+  <div class="callout">
+    <div class="callout-label">Calculation</div>
+    <p>50,000 phones ÷ 960 casings per printer = <strong>52.1 printers</strong> — meaning a minimum of 53 printers running in parallel to theoretically hit the target, before accounting for shift break times.</p>
+  </div>
+
+  <p>[Add your own explanation here of how you modelled this in Plant Simulation — using a ParallelProc object with X and Y dimensions to represent a grid of printers.]</p>
+
+  <h2>The Optimisation Process</h2>
+  <p>I ran multiple scenarios, systematically increasing the number of printers until the 50,000 target was met while minimising overproduction and waste. The results of each scenario are documented below.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Scenario</th>
+        <th>No. of Printers</th>
+        <th>Grid Layout</th>
+        <th>Annual Output</th>
+        <th>Target Met?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Baseline (no printer)</td>
+        <td>—</td>
+        <td>—</td>
+        <td>238,621</td>
+        <td>✓ (line capacity only)</td>
+      </tr>
+      <tr>
+        <td>Scenario 1</td>
+        <td>10</td>
+        <td>2 × 5</td>
+        <td>9,030</td>
+        <td>✗</td>
+      </tr>
+      <tr>
+        <td>Scenario 2</td>
+        <td>53</td>
+        <td>53 × 1</td>
+        <td>~40,000</td>
+        <td>✗</td>
+      </tr>
+      <tr>
+        <td>Scenario 3</td>
+        <td>66</td>
+        <td>11 × 6</td>
+        <td>49,896</td>
+        <td>✗ (104 short)</td>
+      </tr>
+      <tr class="highlight">
+        <td>Final</td>
+        <td>67</td>
+        <td>7 × 10 (approx)</td>
+        <td>52,220</td>
+        <td>✓</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="table-caption">Table 1 — Optimisation scenarios tested, showing the number of printers, grid layout, and resulting annual output.</p>
+
+  <h2>The Final Model</h2>
+  <p>[Write your description of the final model here — describe what it looks like, how the printers feed into the assembly line, and the resource statistics chart.]</p>
+
+  <div class="img-placeholder">
+    <div class="ph-icon">📸</div>
+    <div class="ph-label">Add your screenshot here</div>
+    <div class="ph-desc">Replace with your screenshot showing the full model with 52,220 output visible</div>
+  </div>
+  <figcaption>Fig. 1 — Final Plant Simulation model showing 67 printers in parallel feeding the 6-station FESTO assembly line, producing 52,220 phones/year.</figcaption>
+
+  <div class="img-placeholder">
+    <div class="ph-icon">📊</div>
+    <div class="ph-label">Add your Resource Statistics chart here</div>
+    <div class="ph-desc">Replace with your screenshot of the Resource Statistics bar chart</div>
+  </div>
+  <figcaption>Fig. 2 — Resource Statistics chart showing AM_Printing with the highest working percentage, confirming it as the production bottleneck.</figcaption>
+
+  <div class="video-placeholder">
+    <div class="play-icon">▶</div>
+    <div class="ph-label">Add your screen recording here</div>
+    <div class="ph-desc">Embed your video of the simulation running — replace this block with a &lt;video&gt; or &lt;iframe&gt; tag</div>
+  </div>
+  <figcaption>Video 1 — Screen recording of the Plant Simulation running over 365 days, showing parts flowing from printers through all 6 assembly stations.</figcaption>
+
+  <h2>Critical Analysis: Is 67 Printers Commercially Viable?</h2>
+  <p>[Write your own critical opinion here. Consider: what would 67 industrial 3D printers cost to buy and run? How does this compare to alternative manufacturing methods like injection moulding at 50,000 units/year? Is additive manufacturing actually suitable for this volume, or would a different process make more business sense for Phones-R-Us?]</p>
+
+  <div class="callout">
+    <div class="callout-label">My Opinion</div>
+    <p>[Add your own critical opinion here — this is one of the most important parts of achieving a high grade. Don't just describe the result; analyse what it means for the business.]</p>
+  </div>
+
+</div>
+
+<div class="post-nav">
+  <a href="post5.html" class="post-nav-link">
+    <div class="nav-dir">← Previous post</div>
+    <div class="nav-title">Building the Virtual Factory in Tecnomatix</div>
+  </a>
+  <a href="post7.html" class="post-nav-link" style="text-align:right;">
+    <div class="nav-dir">Next post →</div>
+    <div class="nav-title">Putting the Casing to the Test on the Assembly Line</div>
+  </a>
+</div>
+
+<footer>
+  <p>6E7V0013 Digital Manufacturing — Manchester Metropolitan University</p>
+  <p>Your Name · 2026</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post 4: Inside the Assembly Line: Observing the FESTO CP Lab — DM Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#0f0f0f;--white:#fafaf8;--gray-100:#f4f4f0;--gray-200:#e8e8e2;--gray-400:#b0b0a8;--gray-600:#6b6b63;--ink:#1c1c1c;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,250,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);}
+.nav-logo{font-family:var(--serif);font-size:18px;color:var(--black);text-decoration:none;letter-spacing:-0.02em;}
+.nav-links{display:flex;gap:32px;list-style:none;}.nav-links a{font-size:13px;color:var(--gray-600);text-decoration:none;text-transform:uppercase;letter-spacing:0.04em;transition:color 0.2s;}.nav-links a:hover{color:var(--black);}
+.post-hero{padding:120px 40px 60px;max-width:760px;margin:0 auto;border-bottom:1px solid var(--gray-200);}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);text-decoration:none;font-weight:500;margin-bottom:36px;transition:color 0.2s;}.back-link:hover{color:var(--black);}
+.post-tag{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;}.post-tag::before{content:'';display:block;width:24px;height:1px;background:var(--gray-400);}
+.post-hero h1{font-family:var(--serif);font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-0.02em;color:var(--black);margin-bottom:20px;}
+.post-hero .intro{font-size:18px;font-weight:300;color:var(--gray-600);line-height:1.7;max-width:600px;}
+.post-body{max-width:760px;margin:0 auto;padding:60px 40px 80px;}
+.post-body h2{font-family:var(--serif);font-size:28px;letter-spacing:-0.01em;color:var(--black);margin:48px 0 16px;}
+.post-body p{font-size:16px;color:var(--ink);line-height:1.8;font-weight:300;margin-bottom:20px;max-width:640px;}
+.post-body strong{font-weight:500;color:var(--black);}
+.img-placeholder{background:var(--gray-100);border:1px dashed var(--gray-200);border-radius:4px;padding:48px 24px;text-align:center;margin:32px 0;}
+.img-placeholder .ph-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);font-weight:500;}
+.img-placeholder .ph-desc{font-size:13px;color:var(--gray-400);margin-top:4px;}
+figcaption{font-size:12px;color:var(--gray-400);font-style:italic;text-align:center;margin-top:-24px;margin-bottom:32px;}
+.video-placeholder{background:var(--black);border-radius:4px;padding:64px 24px;text-align:center;margin:32px 0;}
+.video-placeholder .ph-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);font-weight:500;}
+.video-placeholder .ph-desc{font-size:13px;color:rgba(255,255,255,0.2);margin-top:4px;}
+.callout{border-left:2px solid var(--black);padding:16px 20px;margin:32px 0;background:var(--gray-100);}
+.callout p{margin:0;font-size:15px;color:var(--ink);line-height:1.6;font-weight:300;}
+.callout-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--gray-400);margin-bottom:8px;}
+.data-table{width:100%;border-collapse:collapse;font-size:14px;margin:32px 0;}
+.data-table th{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-400);font-weight:500;text-align:left;padding:10px 16px;border-bottom:1px solid var(--gray-200);}
+.data-table td{padding:12px 16px;border-bottom:1px solid var(--gray-100);color:var(--ink);font-weight:300;}
+.data-table .highlight td{font-weight:500;background:var(--gray-100);}
+.post-nav{max-width:760px;margin:0 auto;padding:32px 40px 60px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
+.post-nav-link{text-decoration:none;font-size:13px;color:var(--gray-400);transition:color 0.2s;}.post-nav-link:hover{color:var(--black);}
+.post-nav-link .nav-dir{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+.post-nav-link .nav-title{font-family:var(--serif);font-size:16px;color:var(--black);}
+footer{max-width:760px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
+footer p{font-size:12px;color:var(--gray-400);}
+@media(max-width:640px){nav{padding:0 20px;}.post-hero,.post-body{padding-left:20px;padding-right:20px;}.post-nav{padding:24px 20px 40px;flex-direction:column;gap:20px;}footer{padding:20px;flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+<nav><a href="index.html" class="nav-logo">DM Blog</a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="index.html#posts">Posts</a></li><li><a href="index.html#about">About</a></li></ul></nav>
+<section class="post-hero">
+  <a href="index.html" class="back-link">← All posts</a>
+  <div class="post-tag">FESTO Lab · Week 4–5</div>
+  <h1>Inside the Assembly Line: Observing the FESTO CP Lab</h1>
+  <p class="intro">Six stations, timed cycle observations, and identifying the bottleneck that determines maximum production output.</p>
+</section>
+<div class="post-body">
+<h2>The FESTO CP Lab</h2>
+<p>[Describe the FESTO CP lab in your own words — what it is, what it replicates, and your experience observing it. The lab simulates a real phone assembly line with 6 automated and semi-automated stations.]</p>
+<div class="img-placeholder"><div class="ph-label">Add your photo here</div><div class="ph-desc">Photo of the FESTO CP lab overview</div></div>
+<figcaption>Fig. 1 — [Caption: e.g. "Overview of the FESTO CP assembly line at MMU"]</figcaption>
+<h2>The Six Stations</h2>
+<p>[Describe each station in your own words — what it does and how long it takes. Use your own observations from the lab session.]</p>
+<table class="data-table"><thead><tr><th>Station</th><th>Name</th><th>Function</th><th>Cycle Time</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>[Station name]</td><td>[What it does]</td><td>9s</td></tr>
+<tr><td>2</td><td>[Station name]</td><td>[What it does]</td><td>12s</td></tr>
+<tr><td>3</td><td>[Station name]</td><td>[What it does]</td><td>22s</td></tr>
+<tr><td>4</td><td>[Station name]</td><td>[What it does]</td><td>11s</td></tr>
+<tr class="highlight"><td>5</td><td>[Station name — bottleneck]</td><td>[What it does]</td><td>29s ← bottleneck</td></tr>
+<tr><td>6</td><td>[Station name]</td><td>[What it does]</td><td>9s</td></tr>
+</tbody></table>
+<h2>The Bottleneck</h2>
+<p>[Explain the concept of a bottleneck — the slowest station determines the maximum output of the whole line. Station 5 at 29 seconds is your bottleneck. Explain what this means for production capacity.]</p>
+<div class="callout"><div class="callout-label">Bottleneck Analysis</div><p>The bottleneck station (29s) limits the line to a maximum of one phone every 29 seconds. On a standard 8-hour shift over 48 weeks this equates to approximately 238,000 phones per year — well above the 50,000 target, meaning the assembly line itself has significant spare capacity.</p></div>
+<div class="video-placeholder"><div class="ph-label">Add your video here</div><div class="ph-desc">Replace with your video of the FESTO line running — embed using a video tag or iframe</div></div>
+<figcaption>Video 1 — [Caption: e.g. "The FESTO CP lab in operation, showing all six assembly stations"]</figcaption>
+<h2>Testing My Casing on the Line</h2>
+<p>[Describe how your printed casing performed when put through the FESTO line. Did it pass through all stations without issue? Were there any problems with fit or function?]</p>
+</div>
+<div class="post-nav">
+  <a href="post3.html" class="post-nav-link"><div class="nav-dir">← Previous post</div><div class="nav-title">Measurement &amp; Quality: Does My Casing Meet the Drawing?</div></a>
+  <a href="post5.html" class="post-nav-link" style="text-align:right;"><div class="nav-dir">Next post →</div><div class="nav-title">Building the Virtual Factory in Tecnomatix</div></a>
+</div>
+<footer><p>6E7V0013 Digital Manufacturing — Manchester Metropolitan University</p><p>Your Name · 2026</p></footer>
+</body></html>
