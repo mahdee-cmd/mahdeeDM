@@ -64,7 +64,7 @@
 <section class="post-hero">
   <a href="index.html" class="back-link">← All posts</a>
   <div class="post-tag">Introduction · Week 1</div>
-  <h1>The Brief: Manufacturing Casings for Phones-R-Us</h1>
+  <h1>Manufacturing Casings for Phones-R-Us</h1>
   <p class="intro">An introduction to the module, the challenge, and my plan for the semester ahead — from 3D printing to plant simulation.</p>
 </section>
 
@@ -81,17 +81,12 @@
   <figcaption>Fig. 2 — GA drawing of the top casing provided by Phones-R-Us</figcaption>
   
   <h2>What is Industry 4.0?</h2>
-  <p>This module is framed around <strong>Industry 4.0</strong> — the fourth industrial revolution driven by digitalisation, automation, and data exchange in manufacturing. [Write your own explanation here and reference a source.]</p>
+  <p>This module is framed around <strong>Industry 4.0</strong> — the fourth industrial revolution driven by digitalisation, automation, and data exchange in manufacturing. Industry 4.0 represents the convergence of physical manufacturing and digital technology, integrating cyber-physical systems, the Internet of Things (IoT), cloud computing, and artificial intelligence into the production environment. Schwab (2016) defines this fourth industrial revolution as distinct from all previous ones, not simply because of the technologies involved, but because of the unprecedented speed, scale, and systemic impact of the transformation. Unlike the steam-powered first revolution or the electronics-driven third, Industry 4.0 is defined by connectivity; machines communicate with each other, processes are monitored in real time, and decisions can be made autonomously without human intervention. Lasi et al. (2014) further identify two core drivers of Industry 4.0: application pull, driven by the demand for increasingly customised products, and technology push, driven by the rapid development of smart manufacturing tools. Both are directly relevant to this project. Phones-R-Us requires a flexible manufacturing approach capable of producing modular phone casings, while the tools available, including 3D printing and plant simulation software, represent exactly the kind of enabling technologies Lasi et al. describe.</p>
 
-  <div class="callout">
-    <div class="callout-label">Reference</div>
-    <p>[Add your peer-reviewed source citation here. E.g. — Author (Year) explains that Industry 4.0 represents a fundamental shift in how factories operate, connecting machines, processes, and people through digital networks. Add your own opinion on this.]</p>
-  </div>
-
-  <p>Two key concepts relevant to this project are <strong>vertical integration</strong> — connecting machines within a single factory digitally — and <strong>horizontal integration</strong> — connecting digitally along the supply chain. Both are directly relevant to the challenge of coordinating multiple suppliers producing casings to the same drawing.</p>
+  <p>In this project, <strong>vertical integration<strong> (Hermann et al., 2016) is demonstrated through the Tecnomatix plant simulation, connecting the 3D printing process, the FESTO assembly line stations, and the output counter into one unified digital model. <strong>Horizontal integration<strong> is relevant when considering the multi-supplier challenge: my 3D printed casing had to be compatible with casings produced by other students to the same drawing, reflecting the real-world difficulty of coordinating suppliers digitally along a shared supply chain. Brettel et al. (2014) argue that horizontal integration across supplier networks is one of the most significant challenges manufacturers face in implementing Industry 4.0, as achieving true digital connectivity between independent suppliers requires standardisation of both data formats and manufacturing processes; something this project demonstrated in practice through the variability observed between casings from different suppliers.</p>
 
   <h2>My Plan for the Semester</h2>
-  <p>[Write your own semester plan here. Describe what you intend to do each week and how you'll approach each part of the brief — 3D printing, measurement, FESTO testing, and plant simulation.]</p>
+  <p>Over the course of this module I took on the role of a plastic casing manufacturer supplying Phones-R-Us. My work was structured around four key activities. First, I selected and used a 3D printer to manufacture both the top and bottom phone casings, experimenting with print settings to achieve the best dimensional accuracy within the 2-hour print cycle. Second, I carried out dimensional inspection of my printed casings using measuring equipment in the lab, comparing my results against the GA drawing to assess whether my parts were within tolerance. Third, I observed and timed each of the six stations on the FESTO CP assembly line, recording cycle times and testing my casing on the real line. Finally, I built a virtual model of the entire production process in Tecnomatix Plant Simulation, optimising the number of 3D printers required to meet the 50,000 phones per year target, ultimately achieving an output of 52,220 phones per year with 70 printers running in parallel.</p>
 
   <div class="stat-row">
     <div class="stat-cell">
@@ -103,18 +98,28 @@
       <div class="stat-label">Phones per year target</div>
     </div>
     <div class="stat-cell">
-      <div class="stat-num">9</div>
+      <div class="stat-num">52</div>
       <div class="stat-label">Weeks to deliver</div>
     </div>
     <div class="stat-cell">
-      <div class="stat-num">3+</div>
+      <div class="stat-num">60+</div>
       <div class="stat-label">3D printers available</div>
     </div>
   </div>
 
   <h2>Why This Matters</h2>
-  <p>[Write your own reflection here. Why is digital manufacturing important? What are the benefits of simulating a factory before building it? What challenges do you anticipate?]</p>
+  <p>Digital manufacturing matters because it fundamentally changes how decisions are made. Traditionally, discovering that a production line cannot meet a volume target would require building the line, running it, and measuring the shortfall, at considerable cost. Tao et al. (2018) describe this shift as the rise of the digital twin: a virtual replica of a physical system that enables real-time monitoring, simulation, and optimisation without disrupting real-world production. In my case, the simulation revealed that the 3D printing stage, not the assembly line, was the true production bottleneck, and that 67 printers running in parallel would be needed to hit the annual target of 50,000 phones. That insight, derived entirely from a digital model, would have been far more costly to discover through physical trial and error. This reflects what Tao et al. (2018) identify as the primary value of digital twin technology: the ability to explore and solve manufacturing problems in a virtual environment before committing resources in the physical one.</p>
 
+    <div class="callout">
+    <div class="callout-label">Reference</div>
+    <p>Brettel, M., Friederichsen, N., Keller, M. and Rosenberg, M. (2014) 'How Virtualisation, Decentralisation and Network Building Change the Manufacturing Landscape', International Journal of Mechanical, Industrial Science and Engineering, 8(1), pp. 37–44.
+Hermann, M., Pentek, T. and Otto, B. (2016) 'Design Principles for Industrie 4.0 Scenarios', 49th Hawaii International Conference on System Sciences, pp. 3928–3937.
+Lasi, H., Fettke, P., Kemper, H., Feld, T. and Hoffmann, M. (2014) 'Industry 4.0', Business & Information Systems Engineering, 6(4), pp. 239–242.
+Rüßmann, M., Lorenz, M., Gerbert, P., Waldner, M., Justus, J., Engel, P. and Harnisch, M. (2015) Industry 4.0: The Future of Productivity and Growth in Manufacturing Industries. Boston Consulting Group.
+Schwab, K. (2016) The Fourth Industrial Revolution. Geneva: World Economic Forum.
+Tao, F., Zhang, H., Liu, A. and Nee, A.Y.C. (2018) 'Digital Twin in Industry: State-of-the-Art', IEEE Transactions on Industrial Informatics, 15(4), pp. 2405–2415.</p>
+  </div>
+    
 </div>
 
 <div class="post-nav">
