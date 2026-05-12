@@ -52,19 +52,119 @@ footer p{font-size:12px;color:var(--gray-400);}
   <p class="intro">Does the printed casing actually fit? Testing on the real FESTO line and the challenges of multi-supplier variability.</p>
 </section>
 <div class="post-body">
-<h2>The Moment of Truth</h2>
-<p>[Describe the experience of putting your 3D printed casing onto the FESTO assembly line for the first time. What were you expecting? What actually happened?]</p>
-<div class="video-placeholder"><div class="ph-label">Add your video here</div><div class="ph-desc">Replace with your video of the casing being tested on the FESTO line</div></div>
-<figcaption>Video 1 — [Caption: e.g. "My 3D printed casing passing through all 6 stations of the FESTO CP assembly line"]</figcaption>
-<h2>Results: Did It Pass?</h2>
-<p>[Describe the outcome — did your casing pass through all 6 stations without issues? If there were problems, which station caused them and why? What did this tell you about your manufacturing process?]</p>
-<div class="img-placeholder"><div class="ph-label">Add your photo here</div><div class="ph-desc">Photo of the assembled phone with your casing fitted</div></div>
-<figcaption>Fig. 1 — [Caption: e.g. "The completed phone assembly with my printed casing fitted alongside the master casing"]</figcaption>
-<h2>Comparing My Casing to the Master Supplier</h2>
-<p>[Describe the comparison between your casing and the master casing from another supplier. Were they visually similar? How did the fit compare? Did dimensional differences cause any assembly issues?]</p>
-<div class="callout"><div class="callout-label">Key Challenge</div><p>[Your own reflection on the challenge of multi-supplier variability — even when both suppliers work to the same drawing, variation is inevitable. Discuss what this means for quality control in real manufacturing.]</p></div>
-<h2>What I Would Do Differently</h2>
-<p>[Reflect on what changes to your process — print settings, material choice, post-processing — would improve dimensional accuracy and assembly performance if you were manufacturing at real scale.]</p>
+<h2>Optimised Simulation</h2>
+
+<p>While the initial simulation of the FESTO assembly line alone demonstrated significant spare capacity at approximately 238,000 phones per year, this result was misleading — it assumed an unlimited supply of casings feeding into the line. In reality, the 3D printing stage acts as the true gatekeeper of the entire production system. With a real-world cycle time of <strong>2 hours per casing</strong> on the Bambu Labs P1S, introducing the AM Printing station into the simulation caused output to collapse dramatically, exposing the need for significant optimisation before the 50,000 phones per year target could be met.</p>
+
+<img src="PlantSB.jpg" alt="Final optimised Plant Simulation with AM Printing station and Resource Statistics chart" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 1 — Final optimised Plant Simulation model showing the AM Printing ParallelProc feeding the six FESTO stations, with Resource Statistics chart and 52,290 annual output visible</figcaption>
+
+<p>The final simulation model consists of a <strong>ParallelProc</strong> object representing the bank of 70 Bambu Labs P1S printers — configured as a 7×10 grid — feeding directly into the FESTO CP assembly line. The AM Printing station has a cycle time of 2 hours per casing, and with 70 units running simultaneously it produces sufficient casings to maintain continuous flow into the assembly line. The <strong>Resource Statistics chart</strong> tells a clear story: the AM Printing station shows the highest working percentage of any object in the model, confirming it as the dominant productive element in the system. The assembly stations, by contrast, show a high proportion of <strong>waiting time</strong> — they are idle for much of the shift waiting for the next casing to arrive from the printers. This is the expected behaviour given that the printing process, even with 70 machines, only just meets the takt time requirement of the assembly line.</p>
+
+<p>The simulation was run over <strong>365 days</strong> with the ShiftCalendar configured for 9:00–17:00, Monday to Friday, with two break periods, over 48 working weeks. The final output recorded at the Drain (OutputStation) was <strong>52,290 phones per year</strong> — exceeding the 50,000 target by 2,290 units. The PickAndPlace robotic arm, visible as the red circular arc near the OutputStation, transfers completed assemblies from the line to the output buffer and operates within the shift calendar constraints. The WorkerPool and Broker objects manage worker allocation across the stations, and the BottleneckAnalyzer confirmed that the AM Printing stage is the system bottleneck — with the Oven Station (29 seconds) remaining the bottleneck within the assembly line sub-system itself.</p>
+
+<h2>Experimental Manager</h2>
+
+<p>To systematically determine the minimum number of printers required to meet the 50,000 phones per year target, an analysis was conducted testing printer quantities from 1 to 70. The table below shows the annual output for each configuration — values marked as simulated were directly measured in Plant Simulation, while projected values are calculated from the shift parameters and printer cycle time. The simulation results are slightly lower than pure mathematical projections due to real-world effects including shift transition delays, break periods, and queuing behaviour between the printing and assembly stages — demonstrating why simulation produces more accurate results than hand calculation alone.</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>No. of Printers</th>
+      <th>Grid Layout</th>
+      <th>Annual Output</th>
+      <th>Meets 50,000 Target?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1 × 1</td>
+      <td>~840 (projected)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>5 × 1</td>
+      <td>~4,200 (projected)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2 × 5</td>
+      <td>9,030 (simulated)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>4 × 5</td>
+      <td>~16,800 (projected)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>5 × 6</td>
+      <td>~25,200 (projected)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>5 × 8</td>
+      <td>~33,600 (projected)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>5 × 10</td>
+      <td>~42,000 (projected)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>53</td>
+      <td>53 × 1</td>
+      <td>~40,000 (simulated)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>6 × 10</td>
+      <td>~50,400 (projected)</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>7 × 9</td>
+      <td>~52,920 (projected)</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>66</td>
+      <td>11 × 6</td>
+      <td>49,896 (simulated)</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>67</td>
+      <td>67 × 1</td>
+      <td>~50,400 (projected)</td>
+      <td>✅</td>
+    </tr>
+    <tr class="highlight">
+      <td>70</td>
+      <td>7 × 10</td>
+      <td>52,290 (simulated)</td>
+      <td>✅ Final configuration</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The optimisation results demonstrate clearly that the relationship between printer count and annual output is approximately linear — each additional printer contributes roughly 840 units per year to total output under the configured shift pattern. However, the data also reveals an important non-linearity: 66 printers, despite being projected to exceed 50,000 on paper, actually produced only 49,896 units in simulation — falling 104 units short of the target. This discrepancy highlights a critical advantage of simulation over mathematical projection: the simulation captures the real-world effects of shift transitions, break periods, and queuing that pure calculation ignores. A manufacturer relying solely on hand calculations might have committed to 66 printers believing the target was met, only to discover the shortfall in production. The final configuration of <strong>70 printers in a 7×10 grid</strong> was selected as it reliably exceeds the 50,000 target in simulation while maintaining a realistic and commercially justifiable factory floor layout. The small surplus of 2,290 units provides a production buffer to absorb printer downtime, maintenance periods, and any quality failures that require reprinting — reflecting the lean manufacturing principle of building in just enough capacity to meet demand without excessive overproduction (Womack and Jones, 2003).</p>
+
+<div class="callout">
+  <div class="callout-label" style="font-size:16px;">References</div>
+  <p>1. Negahban, A. and Smith, J.S. (2014) 'Simulation for manufacturing system design and operation: Literature review and analysis', <em>Journal of Manufacturing Systems</em>, 33(2), pp. 241–261.</p>
+  <p>2. Womack, J.P. and Jones, D.T. (2003) <em>Lean Thinking: Banish Waste and Create Wealth in Your Corporation</em>. 2nd edn. New York: Free Press.</p>
+</div>
 </div>
 <div class="post-nav">
   <a href="post6.html" class="post-nav-link"><div class="nav-dir">← Previous post</div><div class="nav-title">From 9,030 to 52,220: Optimising the Simulation</div></a>
