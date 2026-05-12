@@ -74,130 +74,81 @@
 
 <section class="post-hero">
   <a href="index.html" class="back-link">← All posts</a>
-  <div class="post-tag">Optimisation · Week 7–8</div>
-  <h1>From 9,030 to 52,220: Optimising the Simulation</h1>
-  <p class="intro">How adding a realistic 3D printer cycle time exposed a critical production bottleneck — and the step-by-step process of solving it.</p>
+  <div class="post-tag">Plant SImulation · Week 7–8</div>
+  <h1>Building the Virtual Factory: Tecnomatrix</h1>
+  <p class="intro">Step by step: how I modelled the FESTO line in Plant Simulation</p>
 </section>
 
 <div class="post-body">
 
-  <h2>The Problem: Adding the 3D Printer</h2>
-  <p>With the basic FESTO line model producing over 238,000 phones/year on a standard shift, I initially had significant spare capacity. However, the brief requires including the <strong>3D printer as the first stage</strong> of the process — the source of all the casings feeding into the assembly line.</p>
-  <p>My selected printer takes <strong>2 hours per casing</strong>. Adding this as an AM_Printing station feeding into the line had an immediate and dramatic effect on output. [Add your own description of what you observed when you first ran the simulation with the printer included.]</p>
+ <h2>Tecnomatix: Plant Simulation</h2>
 
-  <div class="stat-row">
-    <div class="stat-cell">
-      <div class="stat-num">238k</div>
-      <div class="stat-label">Without printer</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-num">9,030</div>
-      <div class="stat-label">With 10 printers</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-num">52,220</div>
-      <div class="stat-label">Final result</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-num">67</div>
-      <div class="stat-label">Printers required</div>
-    </div>
-  </div>
+<p>Tecnomatix Plant Simulation is a discrete event simulation software developed by Siemens that allows engineers to build virtual models of manufacturing systems and production lines. Rather than physically constructing a factory to test its performance, Plant Simulation enables the entire process to be modelled digitally — machines, conveyors, workers, shift patterns, and buffers can all be represented as objects and connected together to replicate real-world production flow. The simulation can then be run over any time period to measure output, identify bottlenecks, and test different production scenarios before any real investment is made. Negahban and Smith (2014) describe discrete event simulation as one of the most powerful tools available to manufacturing engineers, enabling the analysis of complex production systems that would be impossible to evaluate analytically — making it particularly valuable for a multi-stage process like the Phones-R-Us assembly line where the interaction between 3D printing capacity and assembly line throughput determines overall system output.</p>
 
-  <h2>Understanding the Bottleneck</h2>
-  <p>The bottleneck shifted entirely from the assembly line to the printing stage. A single printer produces one casing every 2 hours — on a standard 8-hour shift over 48 working weeks, that is just <strong>960 casings per printer per year</strong>. To reach 50,000 phones/year requires:</p>
+<h2>Simulation Setup</h2>
 
-  <div class="callout">
-    <div class="callout-label">Calculation</div>
-    <p>50,000 phones ÷ 960 casings per printer = <strong>52.1 printers</strong> — meaning a minimum of 53 printers running in parallel to theoretically hit the target, before accounting for shift break times.</p>
-  </div>
+<img src="sim-setup.jpg" alt="First Plant Simulation setup showing the FESTO assembly line without the 3D printer" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 1 — Initial Plant Simulation model showing the six FESTO stations connected by conveyors, with ShiftCalendar, WorkerPool, BottleneckAnalyzer, and Chart objects configured. Simulation run over 365 days.</figcaption>
 
-  <p>[Add your own explanation here of how you modelled this in Plant Simulation — using a ParallelProc object with X and Y dimensions to represent a grid of printers.]</p>
+<p>The initial simulation was built to replicate the FESTO CP assembly line in isolation — before the 3D printing stage was introduced. The model consists of six <strong>SingleProc</strong> objects representing each assembly station, connected in sequence by conveyors. A <strong>Source</strong> object feeds parts into the line and a <strong>Drain</strong> at the end counts completed phones. The <strong>ShiftCalendar</strong> was configured to run 9:00–17:00, Monday to Friday, with two break periods, over 48 working weeks — representing a standard single-shift factory operation. A <strong>WorkerPool</strong> object was included to represent the assembly line operators, and a <strong>BottleneckAnalyzer</strong> was added to automatically identify the slowest station during the simulation run. The <strong>Chart</strong> object provides a visual Resource Statistics breakdown showing the percentage of time each station spends working, waiting, paused, and blocked. The simulation was set to run for <strong>365 days</strong> to generate annual output figures directly comparable to the 50,000 phones/year target.</p>
 
-  <h2>The Optimisation Process</h2>
-  <p>I ran multiple scenarios, systematically increasing the number of printers until the 50,000 target was met while minimising overproduction and waste. The results of each scenario are documented below.</p>
+<h2>Station Times for Simulation</h2>
 
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Scenario</th>
-        <th>No. of Printers</th>
-        <th>Grid Layout</th>
-        <th>Annual Output</th>
-        <th>Target Met?</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Baseline (no printer)</td>
-        <td>—</td>
-        <td>—</td>
-        <td>238,621</td>
-        <td>✓ (line capacity only)</td>
-      </tr>
-      <tr>
-        <td>Scenario 1</td>
-        <td>10</td>
-        <td>2 × 5</td>
-        <td>9,030</td>
-        <td>✗</td>
-      </tr>
-      <tr>
-        <td>Scenario 2</td>
-        <td>53</td>
-        <td>53 × 1</td>
-        <td>~40,000</td>
-        <td>✗</td>
-      </tr>
-      <tr>
-        <td>Scenario 3</td>
-        <td>66</td>
-        <td>11 × 6</td>
-        <td>49,896</td>
-        <td>✗ (104 short)</td>
-      </tr>
-      <tr class="highlight">
-        <td>Final</td>
-        <td>67</td>
-        <td>7 × 10 (approx)</td>
-        <td>52,220</td>
-        <td>✓</td>
-      </tr>
-    </tbody>
-  </table>
-  <p class="table-caption">Table 1 — Optimisation scenarios tested, showing the number of printers, grid layout, and resulting annual output.</p>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Station</th>
+      <th>Name</th>
+      <th>Processing Time (seconds)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Front Mag Station</td>
+      <td>9s</td>
+      <td>Fastest station — never the bottleneck</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Measuring Station</td>
+      <td>12s</td>
+      <td>Laser dimensional check</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Pick By Light Station</td>
+      <td>22s</td>
+      <td>Operator guided component placement</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Press Station</td>
+      <td>11s</td>
+      <td>Machine presses top casing onto bottom</td>
+    </tr>
+    <tr class="highlight">
+      <td>5</td>
+      <td>Oven Station</td>
+      <td>29s</td>
+      <td>Bottleneck — slowest station on the line</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Output Station</td>
+      <td>9s</td>
+      <td>Completed assembly exits the line</td>
+    </tr>
+  </tbody>
+</table>
 
-  <h2>The Final Model</h2>
-  <p>[Write your description of the final model here — describe what it looks like, how the printers feed into the assembly line, and the resource statistics chart.]</p>
+<p>With these cycle times entered and the simulation run over 365 days, the assembly line alone produced approximately <strong>238,000 phones per year</strong> — nearly five times the 50,000 target. At first glance this appears to comfortably meet demand. However, this result only reflects the capacity of the assembly line in isolation, with an unlimited supply of parts being fed in. Within the line itself, the <strong>Oven Station at 29 seconds</strong> is the clear bottleneck — as the slowest station, it dictates the maximum throughput of the entire line regardless of how fast the other five stations operate. The BottleneckAnalyzer confirmed this, highlighting the Oven Station as the limiting factor. The Resource Statistics chart showed that stations upstream of the Oven Station spent a significant proportion of their time in a <strong>blocked</strong> state — unable to pass their completed part to the next station because the Oven was still processing the previous one. This phenomenon, known as <strong>blocking</strong>, is a direct consequence of the bottleneck and represents wasted capacity at the faster upstream stations. In the next post, the 3D printing stage is introduced into the simulation — and the true bottleneck of the complete production system shifts dramatically from the Oven Station to the printing process itself.</p>
 
-  <div class="img-placeholder">
-    <div class="ph-icon">📸</div>
-    <div class="ph-label">Add your screenshot here</div>
-    <div class="ph-desc">Replace with your screenshot showing the full model with 52,220 output visible</div>
-  </div>
-  <figcaption>Fig. 1 — Final Plant Simulation model showing 67 printers in parallel feeding the 6-station FESTO assembly line, producing 52,220 phones/year.</figcaption>
-
-  <div class="img-placeholder">
-    <div class="ph-icon">📊</div>
-    <div class="ph-label">Add your Resource Statistics chart here</div>
-    <div class="ph-desc">Replace with your screenshot of the Resource Statistics bar chart</div>
-  </div>
-  <figcaption>Fig. 2 — Resource Statistics chart showing AM_Printing with the highest working percentage, confirming it as the production bottleneck.</figcaption>
-
-  <div class="video-placeholder">
-    <div class="play-icon">▶</div>
-    <div class="ph-label">Add your screen recording here</div>
-    <div class="ph-desc">Embed your video of the simulation running — replace this block with a &lt;video&gt; or &lt;iframe&gt; tag</div>
-  </div>
-  <figcaption>Video 1 — Screen recording of the Plant Simulation running over 365 days, showing parts flowing from printers through all 6 assembly stations.</figcaption>
-
-  <h2>Critical Analysis: Is 67 Printers Commercially Viable?</h2>
-  <p>[Write your own critical opinion here. Consider: what would 67 industrial 3D printers cost to buy and run? How does this compare to alternative manufacturing methods like injection moulding at 50,000 units/year? Is additive manufacturing actually suitable for this volume, or would a different process make more business sense for Phones-R-Us?]</p>
-
-  <div class="callout">
-    <div class="callout-label">My Opinion</div>
-    <p>[Add your own critical opinion here — this is one of the most important parts of achieving a high grade. Don't just describe the result; analyse what it means for the business.]</p>
-  </div>
+<div class="callout">
+  <div class="callout-label" style="font-size:16px;">References</div>
+  <p>1. Negahban, A. and Smith, J.S. (2014) 'Simulation for manufacturing system design and operation: Literature review and analysis', <em>Journal of Manufacturing Systems</em>, 33(2), pp. 241–261.</p>
+</div>
 
 </div>
 
