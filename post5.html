@@ -2,77 +2,426 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post 5: Building the Virtual Factory in Tecnomatix — DM Blog</title>
+<title>Post 5: Process Analysis — DM Blog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--black:#0f0f0f;--white:#fafaf8;--gray-100:#f4f4f0;--gray-200:#e8e8e2;--gray-400:#b0b0a8;--gray-600:#6b6b63;--ink:#1c1c1c;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.6;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,250,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);}
-.nav-logo{font-family:var(--serif);font-size:18px;color:var(--black);text-decoration:none;letter-spacing:-0.02em;}
-.nav-links{display:flex;gap:32px;list-style:none;}.nav-links a{font-size:13px;color:var(--gray-600);text-decoration:none;text-transform:uppercase;letter-spacing:0.04em;transition:color 0.2s;}.nav-links a:hover{color:var(--black);}
-.post-hero{padding:120px 40px 60px;max-width:760px;margin:0 auto;border-bottom:1px solid var(--gray-200);}
-.back-link{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);text-decoration:none;font-weight:500;margin-bottom:36px;transition:color 0.2s;}.back-link:hover{color:var(--black);}
-.post-tag{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;}.post-tag::before{content:'';display:block;width:24px;height:1px;background:var(--gray-400);}
-.post-hero h1{font-family:var(--serif);font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-0.02em;color:var(--black);margin-bottom:20px;}
-.post-hero .intro{font-size:18px;font-weight:300;color:var(--gray-600);line-height:1.7;max-width:600px;}
-.post-body{max-width:760px;margin:0 auto;padding:60px 40px 80px;}
-.post-body h2{font-family:var(--serif);font-size:28px;letter-spacing:-0.01em;color:var(--black);margin:48px 0 16px;}
-.post-body p{font-size:16px;color:var(--ink);line-height:1.8;font-weight:300;margin-bottom:20px;max-width:640px;}
-.post-body strong{font-weight:500;color:var(--black);}
-.img-placeholder{background:var(--gray-100);border:1px dashed var(--gray-200);border-radius:4px;padding:48px 24px;text-align:center;margin:32px 0;}
-.img-placeholder .ph-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);font-weight:500;}
-.img-placeholder .ph-desc{font-size:13px;color:var(--gray-400);margin-top:4px;}
-figcaption{font-size:12px;color:var(--gray-400);font-style:italic;text-align:center;margin-top:-24px;margin-bottom:32px;}
-.video-placeholder{background:var(--black);border-radius:4px;padding:64px 24px;text-align:center;margin:32px 0;}
-.video-placeholder .ph-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);font-weight:500;}
-.video-placeholder .ph-desc{font-size:13px;color:rgba(255,255,255,0.2);margin-top:4px;}
-.callout{border-left:2px solid var(--black);padding:16px 20px;margin:32px 0;background:var(--gray-100);}
-.callout p{margin:0;font-size:15px;color:var(--ink);line-height:1.6;font-weight:300;}
-.callout-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--gray-400);margin-bottom:8px;}
-.data-table{width:100%;border-collapse:collapse;font-size:14px;margin:32px 0;}
-.data-table th{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-400);font-weight:500;text-align:left;padding:10px 16px;border-bottom:1px solid var(--gray-200);}
-.data-table td{padding:12px 16px;border-bottom:1px solid var(--gray-100);color:var(--ink);font-weight:300;}
-.data-table .highlight td{font-weight:500;background:var(--gray-100);}
-.post-nav{max-width:760px;margin:0 auto;padding:32px 40px 60px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
-.post-nav-link{text-decoration:none;font-size:13px;color:var(--gray-400);transition:color 0.2s;}.post-nav-link:hover{color:var(--black);}
-.post-nav-link .nav-dir{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
-.post-nav-link .nav-title{font-family:var(--serif);font-size:16px;color:var(--black);}
-footer{max-width:760px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
-footer p{font-size:12px;color:var(--gray-400);}
-@media(max-width:640px){nav{padding:0 20px;}.post-hero,.post-body{padding-left:20px;padding-right:20px;}.post-nav{padding:24px 20px 40px;flex-direction:column;gap:20px;}footer{padding:20px;flex-direction:column;gap:4px;}}
+  :root{--black:#0f0f0f;--white:#fafaf8;--gray-100:#f4f4f0;--gray-200:#e8e8e2;--gray-400:#b0b0a8;--gray-600:#6b6b63;--ink:#1c1c1c;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.6;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,250,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);}
+  .nav-logo{font-family:var(--serif);font-size:18px;color:var(--black);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-links{display:flex;gap:32px;list-style:none;}.nav-links a{font-size:13px;color:var(--gray-600);text-decoration:none;text-transform:uppercase;letter-spacing:0.04em;transition:color 0.2s;}.nav-links a:hover{color:var(--black);}
+  .post-hero{padding:120px 40px 60px;max-width:760px;margin:0 auto;border-bottom:1px solid var(--gray-200);}
+  .back-link{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);text-decoration:none;font-weight:500;margin-bottom:36px;transition:color 0.2s;}.back-link:hover{color:var(--black);}
+  .post-tag{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;}.post-tag::before{content:'';display:block;width:24px;height:1px;background:var(--gray-400);}
+  .post-hero h1{font-family:var(--serif);font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-0.02em;color:var(--black);margin-bottom:20px;}
+  .post-hero .intro{font-size:18px;font-weight:300;color:var(--gray-600);line-height:1.7;max-width:600px;}
+  .post-body{max-width:760px;margin:0 auto;padding:60px 40px 80px;}
+  .post-body h2{font-family:var(--serif);font-size:28px;letter-spacing:-0.01em;color:var(--black);margin:48px 0 16px;}
+  .post-body p{font-size:16px;color:var(--ink);line-height:1.8;font-weight:300;margin-bottom:20px;max-width:640px;}
+  .post-body strong{font-weight:500;color:var(--black);}
+  figcaption{font-size:12px;color:var(--gray-400);font-style:italic;text-align:center;margin-top:8px;margin-bottom:32px;}
+  .callout{border-left:2px solid var(--black);padding:16px 20px;margin:32px 0;background:var(--gray-100);}
+  .callout p{margin:0 0 8px 0;font-size:15px;color:var(--ink);line-height:1.6;font-weight:300;}
+  .callout p:last-child{margin-bottom:0;}
+  .callout-label{font-size:16px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--gray-400);margin-bottom:8px;}
+  .chart-container{background:var(--white);border:1px solid var(--gray-200);border-radius:4px;padding:32px;margin:32px 0;overflow-x:auto;}
+  .post-nav{max-width:760px;margin:0 auto;padding:32px 40px 60px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
+  .post-nav-link{text-decoration:none;font-size:13px;color:var(--gray-400);transition:color 0.2s;}.post-nav-link:hover{color:var(--black);}
+  .post-nav-link .nav-dir{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .post-nav-link .nav-title{font-family:var(--serif);font-size:16px;color:var(--black);}
+  footer{max-width:760px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);}
+  footer p{font-size:12px;color:var(--gray-400);}
+  .takt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-200);border:1px solid var(--gray-200);margin:24px 0;}
+  .takt-cell{background:var(--white);padding:20px;text-align:center;}
+  .takt-num{font-family:var(--serif);font-size:28px;color:var(--black);line-height:1;margin-bottom:4px;}
+  .takt-label{font-size:11px;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;}
+  .takt-result{background:var(--black);color:var(--white);padding:20px;text-align:center;margin:0 0 24px;border-radius:2px;}
+  .takt-result .num{font-family:var(--serif);font-size:36px;margin-bottom:4px;}
+  .takt-result .lbl{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;}
+  .pfmea-table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;}
+  .pfmea-table th{background:var(--black);color:var(--white);padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;font-weight:500;}
+  .pfmea-table td{padding:10px;border-bottom:1px solid var(--gray-200);color:var(--ink);font-weight:300;vertical-align:top;line-height:1.5;}
+  .pfmea-table tr:nth-child(even) td{background:var(--gray-100);}
+  .rpn-high{background:#fee2e2 !important;color:#991b1b;font-weight:500;text-align:center;}
+  .rpn-med{background:#fef3c7 !important;color:#92400e;font-weight:500;text-align:center;}
+  .rpn-low{background:#d1fae5 !important;color:#065f46;font-weight:500;text-align:center;}
+  .bmc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--gray-200);border:1px solid var(--gray-200);margin:8px 0 1px 0;}
+  .bmc-cell{background:var(--white);padding:14px;}
+  .bmc-cell.span2{grid-row:span 2;}
+  .bmc-cell h4{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-400);font-weight:500;margin-bottom:8px;}
+  .bmc-cell ul{list-style:none;padding:0;}
+  .bmc-cell ul li{font-size:12px;color:var(--ink);padding:2px 0;font-weight:300;line-height:1.5;}
+  .bmc-cell ul li::before{content:'— ';color:var(--gray-400);}
+  .bmc-footer{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gray-200);border:1px solid var(--gray-200);border-top:none;margin-bottom:8px;}
+  .bmc-footer-cell{background:var(--white);padding:14px;}
+  .bmc-footer-cell h4{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-400);font-weight:500;margin-bottom:8px;}
+  .bmc-footer-cell ul{list-style:none;padding:0;}
+  .bmc-footer-cell ul li{font-size:12px;color:var(--ink);padding:2px 0;font-weight:300;line-height:1.5;}
+  .bmc-footer-cell ul li::before{content:'— ';color:var(--gray-400);}
+  @media(max-width:640px){nav{padding:0 20px;}.post-hero,.post-body{padding-left:20px;padding-right:20px;}.post-nav{padding:24px 20px 40px;flex-direction:column;gap:20px;}footer{padding:20px;flex-direction:column;gap:4px;}.takt-grid{grid-template-columns:1fr;}.bmc-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
 <nav><a href="index.html" class="nav-logo">DM Blog</a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="index.html#posts">Posts</a></li><li><a href="index.html#about">About</a></li></ul></nav>
+
 <section class="post-hero">
   <a href="index.html" class="back-link">← All posts</a>
   <div class="post-tag">Analysis · Week 5–7</div>
   <h1>Process Analysis</h1>
-  <p class="intro">Value stream mapping, takt time analysis, process failure modes, and business modelling for the Phones-R-Us production line.</p>
+  <p class="intro">Process failure analysis, takt time calculation, value stream mapping, and business modelling for the Phones-R-Us production line.</p>
 </section>
+
 <div class="post-body">
-<h2>What is Plant Simulation?</h2>
-<p>[Explain in your own words what Tecnomatix Plant Simulation is and why virtual factory modelling is valuable. Reference a peer-reviewed source about digital twins or simulation-driven manufacturing.]</p>
-<div class="callout"><div class="callout-label">Reference</div><p>[Add your peer-reviewed source citation here and your own opinion on what the source says about virtual modelling in manufacturing.]</p></div>
-<h2>Building the Model: Step by Step</h2>
-<p>[Describe how you built the model — creating the frame, adding SingleProc objects for each station, connecting them with conveyors, adding a source and drain. Be specific about the steps you took.]</p>
-<div class="img-placeholder"><div class="ph-label">Add your screenshot here</div><div class="ph-desc">Early screenshot of your model being built — before it was complete</div></div>
-<figcaption>Fig. 1 — [Caption: e.g. "Early stage of model construction showing the 6 stations connected by conveyors"]</figcaption>
-<h2>Setting Cycle Times &amp; the Shift Calendar</h2>
-<p>[Explain how you entered the cycle times from your FESTO observations into each SingleProc. Describe your shift calendar setup — 9:00–17:00, Mon–Fri, with two breaks.]</p>
-<div class="img-placeholder"><div class="ph-label">Add your screenshot here</div><div class="ph-desc">Screenshot of your ShiftCalendar settings</div></div>
-<figcaption>Fig. 2 — [Caption: e.g. "Shift calendar configured for a standard 8-hour day, Monday to Friday with morning and lunch breaks"]</figcaption>
-<h2>Initial Results: Before Adding the 3D Printer</h2>
-<p>[Describe the initial simulation results with just the 6 assembly stations — approximately 238,000 phones/year. Explain what this means: the assembly line itself has far more capacity than the 50,000 target requires.]</p>
-<div class="img-placeholder"><div class="ph-label">Add your screenshot here</div><div class="ph-desc">Screenshot of the simulation running with output visible</div></div>
-<figcaption>Fig. 3 — [Caption describing the result shown]</figcaption>
-<h2>What This Tells Us</h2>
-<p>[Your own critical reflection — what does having 238,000 capacity but only needing 50,000 mean for the business? Spare capacity, cost reduction opportunities, potential for growth?]</p>
+
+  <h2>Introduction</h2>
+  <p>Before committing to a manufacturing process or production system, it is essential to analyse and model it using structured engineering tools. These tools allow potential problems to be identified and resolved before they occur in a real factory — a core principle of digital manufacturing and Industry 4.0. This post documents four key process analysis tools applied to the Phones-R-Us production scenario: <strong>Takt Time</strong> analysis to verify whether the process can meet customer demand, a <strong>Value Stream Map</strong> to visualise the end-to-end flow, a <strong>Process Failure Mode and Effects Analysis (PFMEA)</strong> to identify and mitigate risks, and a <strong>Business Model Canvas</strong> to frame the wider commercial context. Dittmann et al. (2004) describe PFMEA as a formalised analytical method originating in the NASA Apollo Project, used to identify failures during the planning phase before production begins — making it particularly suited to this project where the consequences of dimensional failure at the FESTO line are directly observable.</p>
+
+  <h2>Takt Time</h2>
+  <p>Takt time is the maximum time allowed to produce one unit in order to meet customer demand. It is calculated by dividing the available production time by the required output. For Phones-R-Us, the target is 50,000 phones per year on a standard 8-hour shift, 5 days per week, over 48 working weeks per year.</p>
+
+  <div class="takt-grid">
+    <div class="takt-cell"><div class="takt-num">50,000</div><div class="takt-label">Units required/year</div></div>
+    <div class="takt-cell"><div class="takt-num">1,920</div><div class="takt-label">Available hours/year</div></div>
+    <div class="takt-cell"><div class="takt-num">6,912,000</div><div class="takt-label">Available seconds/year</div></div>
+  </div>
+  <div class="takt-result">
+    <div class="num">138.2 seconds</div>
+    <div class="lbl">Takt Time — one phone must be completed every 138.2 seconds to meet demand</div>
+  </div>
+
+  <p>The takt time of <strong>138.2 seconds</strong> is significantly longer than the FESTO assembly line bottleneck of 29 seconds (Oven Station), confirming the line has ample capacity to meet the 50,000/year target on a single shift. However, the 3D printing stage at 2 hours (7,200 seconds) per casing vastly exceeds the takt time — requiring 70 printers running in parallel to bring the effective print takt time into line with demand. This confirms that takt time analysis must be applied across the entire value stream rather than individual operations in isolation.</p>
+
+  <h2>Value Stream Map</h2>
+  <p>The Value Stream Map below visualises the complete production flow from PLA filament supply through 3D printing, quality inspection, FESTO assembly, and final output — highlighting where value is added and where waste exists.</p>
+
+  <div class="chart-container">
+    <div style="overflow-x:auto;">
+      <svg viewBox="0 0 900 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:600px;font-family:'DM Sans',sans-serif;">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#0f0f0f"/>
+          </marker>
+        </defs>
+        <text x="450" y="22" text-anchor="middle" font-size="12" font-weight="500" fill="#0f0f0f">Value Stream Map — Phones-R-Us Phone Casing Production</text>
+        <!-- Supplier -->
+        <rect x="15" y="40" width="80" height="48" fill="#f4f4f0" stroke="#0f0f0f" stroke-width="1.5" rx="2"/>
+        <text x="55" y="61" text-anchor="middle" font-size="9" font-weight="500" fill="#0f0f0f">SUPPLIER</text>
+        <text x="55" y="74" text-anchor="middle" font-size="8" fill="#6b6b63">PLA Filament</text>
+        <line x1="95" y1="64" x2="135" y2="64" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)"/>
+        <!-- 3D Print -->
+        <rect x="135" y="35" width="95" height="58" fill="#f4f4f0" stroke="#0f0f0f" stroke-width="1.5" rx="2"/>
+        <text x="182" y="56" text-anchor="middle" font-size="9" font-weight="500" fill="#0f0f0f">3D PRINTING</text>
+        <text x="182" y="69" text-anchor="middle" font-size="8" fill="#6b6b63">70× Bambu P1S</text>
+        <text x="182" y="82" text-anchor="middle" font-size="8" fill="#b91c1c" font-weight="500">CT: 2 hours</text>
+        <!-- Wait -->
+        <line x1="230" y1="64" x2="268" y2="64" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)"/>
+        <polygon points="249,54 239,70 259,70" fill="#fef3c7" stroke="#92400e" stroke-width="1"/>
+        <!-- Inspection -->
+        <rect x="268" y="35" width="95" height="58" fill="#f4f4f0" stroke="#0f0f0f" stroke-width="1.5" rx="2"/>
+        <text x="315" y="56" text-anchor="middle" font-size="9" font-weight="500" fill="#0f0f0f">INSPECTION</text>
+        <text x="315" y="69" text-anchor="middle" font-size="8" fill="#6b6b63">Dimensional check</text>
+        <text x="315" y="82" text-anchor="middle" font-size="8" fill="#059669">CT: ~5 min</text>
+        <!-- Wait -->
+        <line x1="363" y1="64" x2="401" y2="64" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)"/>
+        <polygon points="382,54 372,70 392,70" fill="#fef3c7" stroke="#92400e" stroke-width="1"/>
+        <!-- FESTO box -->
+        <rect x="401" y="26" width="340" height="80" fill="#f4f4f0" stroke="#0f0f0f" stroke-width="1.5" rx="2"/>
+        <text x="571" y="44" text-anchor="middle" font-size="9" font-weight="500" fill="#0f0f0f">FESTO CP ASSEMBLY LINE</text>
+        <!-- Station boxes -->
+        <rect x="409" y="52" width="48" height="42" fill="white" stroke="#b0b0a8" stroke-width="1" rx="1"/>
+        <text x="433" y="67" text-anchor="middle" font-size="7" fill="#0f0f0f">Front Mag</text>
+        <text x="433" y="78" text-anchor="middle" font-size="7" fill="#0f0f0f">Station</text>
+        <text x="433" y="89" text-anchor="middle" font-size="7" fill="#6b6b63">9s</text>
+        <rect x="462" y="52" width="48" height="42" fill="white" stroke="#b0b0a8" stroke-width="1" rx="1"/>
+        <text x="486" y="67" text-anchor="middle" font-size="7" fill="#0f0f0f">Measuring</text>
+        <text x="486" y="78" text-anchor="middle" font-size="7" fill="#0f0f0f">Station</text>
+        <text x="486" y="89" text-anchor="middle" font-size="7" fill="#6b6b63">12s</text>
+        <rect x="515" y="52" width="48" height="42" fill="white" stroke="#b0b0a8" stroke-width="1" rx="1"/>
+        <text x="539" y="67" text-anchor="middle" font-size="7" fill="#0f0f0f">Pick By</text>
+        <text x="539" y="78" text-anchor="middle" font-size="7" fill="#0f0f0f">Light</text>
+        <text x="539" y="89" text-anchor="middle" font-size="7" fill="#6b6b63">22s</text>
+        <rect x="568" y="52" width="48" height="42" fill="white" stroke="#b0b0a8" stroke-width="1" rx="1"/>
+        <text x="592" y="67" text-anchor="middle" font-size="7" fill="#0f0f0f">Press</text>
+        <text x="592" y="78" text-anchor="middle" font-size="7" fill="#0f0f0f">Station</text>
+        <text x="592" y="89" text-anchor="middle" font-size="7" fill="#6b6b63">11s</text>
+        <rect x="621" y="52" width="48" height="42" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5" rx="1"/>
+        <text x="645" y="67" text-anchor="middle" font-size="7" fill="#0f0f0f">Oven</text>
+        <text x="645" y="78" text-anchor="middle" font-size="7" fill="#0f0f0f">Station</text>
+        <text x="645" y="89" text-anchor="middle" font-size="7" fill="#b91c1c" font-weight="500">29s ★</text>
+        <rect x="674" y="52" width="48" height="42" fill="white" stroke="#b0b0a8" stroke-width="1" rx="1"/>
+        <text x="698" y="67" text-anchor="middle" font-size="7" fill="#0f0f0f">Output</text>
+        <text x="698" y="78" text-anchor="middle" font-size="7" fill="#0f0f0f">Station</text>
+        <text x="698" y="89" text-anchor="middle" font-size="7" fill="#6b6b63">9s</text>
+        <!-- Arrow to customer -->
+        <line x1="741" y1="66" x2="780" y2="66" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)"/>
+        <!-- Customer -->
+        <rect x="780" y="40" width="90" height="48" fill="#f4f4f0" stroke="#0f0f0f" stroke-width="1.5" rx="2"/>
+        <text x="825" y="61" text-anchor="middle" font-size="9" font-weight="500" fill="#0f0f0f">CUSTOMER</text>
+        <text x="825" y="74" text-anchor="middle" font-size="8" fill="#6b6b63">Phones-R-Us</text>
+        <!-- Timeline -->
+        <line x1="15" y1="130" x2="885" y2="130" stroke="#e8e8e2" stroke-width="1"/>
+        <rect x="135" y="135" width="95" height="18" fill="#0f0f0f" rx="1"/>
+        <text x="182" y="148" text-anchor="middle" font-size="7" fill="white">2 hrs (VA)</text>
+        <rect x="249" y="135" width="19" height="18" fill="#fef3c7" stroke="#92400e" stroke-width="0.5" rx="1"/>
+        <text x="258" y="148" text-anchor="middle" font-size="6" fill="#92400e">W</text>
+        <rect x="268" y="135" width="95" height="18" fill="#0f0f0f" rx="1"/>
+        <text x="315" y="148" text-anchor="middle" font-size="7" fill="white">~5 min (VA)</text>
+        <rect x="382" y="135" width="19" height="18" fill="#fef3c7" stroke="#92400e" stroke-width="0.5" rx="1"/>
+        <text x="391" y="148" text-anchor="middle" font-size="6" fill="#92400e">W</text>
+        <rect x="401" y="135" width="340" height="18" fill="#0f0f0f" rx="1"/>
+        <text x="571" y="148" text-anchor="middle" font-size="7" fill="white">92 seconds total assembly (VA)</text>
+        <!-- Legend -->
+        <rect x="15" y="170" width="12" height="10" fill="#0f0f0f"/>
+        <text x="33" y="180" font-size="9" fill="#6b6b63">Value-adding time</text>
+        <rect x="140" y="170" width="12" height="10" fill="#fef3c7" stroke="#92400e" stroke-width="0.5"/>
+        <text x="158" y="180" font-size="9" fill="#6b6b63">Non-value-adding (wait)</text>
+        <rect x="300" y="170" width="12" height="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="0.5"/>
+        <text x="318" y="180" font-size="9" fill="#6b6b63">Bottleneck ★</text>
+        <!-- Summary -->
+        <text x="15" y="210" font-size="10" font-weight="500" fill="#0f0f0f">Total VA time: ~2hrs 7min | Dominant waste: wait between 3D printing and assembly</text>
+        <text x="15" y="228" font-size="10" fill="#b91c1c">Full value stream bottleneck: 3D Printing (2hrs) | Assembly bottleneck: Oven Station (29s)</text>
+        <text x="15" y="246" font-size="10" fill="#6b6b63">Takt time: 138.2s | 70 printers required to meet takt time at the printing stage</text>
+      </svg>
+    </div>
+    <figcaption>Figure 1 — Value Stream Map for the Phones-R-Us phone casing production process</figcaption>
+  </div>
+
+  <p>The VSM clearly shows that the 3D printing stage dominates the production lead time at 2 hours per casing, while the entire FESTO assembly process adds only 92 seconds of value. The primary source of waste in the system is the wait time between the printing farm and the assembly line — a queue that only disappears when sufficient printers (70) are running to maintain continuous flow into the FESTO line.</p>
+
+  <h2>Process Failure Mode & Effects Analysis (PFMEA)</h2>
+  <p>The PFMEA below identifies key potential failure modes across the production process, assessing each for Severity (S), Occurrence (O), and Detectability (D) on a 1–10 scale as defined by the AIAG standard used in the university template. The Risk Priority Number (RPN = S × O × D) determines priority for corrective action. Hofig et al. (2019) note that PFMEA is particularly valuable for multi-stage processes where failure in one stage propagates downstream — directly applicable here where a dimensionally inaccurate casing will halt the FESTO line at the Measuring Station.</p>
+
+  <div class="chart-container" style="padding:16px;">
+    <table class="pfmea-table">
+      <thead>
+        <tr>
+          <th>Process Step</th>
+          <th>Failure Mode</th>
+          <th>Effect</th>
+          <th>S</th>
+          <th>Cause</th>
+          <th>O</th>
+          <th>Controls</th>
+          <th>D</th>
+          <th>RPN</th>
+          <th>Recommended Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>3D Printing</td>
+          <td>Warping of casing during print</td>
+          <td>Dimensional deviation — fail at Measuring Station</td>
+          <td>8</td>
+          <td>Open-frame printer / ambient temp fluctuation</td>
+          <td>6</td>
+          <td>Visual inspection post-print</td>
+          <td>6</td>
+          <td class="rpn-high">288</td>
+          <td>Use enclosed printer (Bambu P1S). Monitor bed temp throughout print.</td>
+        </tr>
+        <tr>
+          <td>Multi-supplier</td>
+          <td>Dimensional incompatibility between suppliers</td>
+          <td>Casings do not fit together — assembly failure</td>
+          <td>8</td>
+          <td>Variation in printer calibration across suppliers</td>
+          <td>5</td>
+          <td>GA drawing tolerance spec</td>
+          <td>5</td>
+          <td class="rpn-high">200</td>
+          <td>First Article Inspection across all suppliers. Tighten interface tolerances.</td>
+        </tr>
+        <tr>
+          <td>3D Printing</td>
+          <td>Stringing between features</td>
+          <td>Poor surface finish — fit issues at Press Station</td>
+          <td>5</td>
+          <td>Incorrect retraction / high nozzle temp</td>
+          <td>5</td>
+          <td>Visual inspection</td>
+          <td>5</td>
+          <td class="rpn-med">125</td>
+          <td>Calibrate retraction. Use enclosed printer with consistent thermal environment.</td>
+        </tr>
+        <tr>
+          <td>Snap Fit</td>
+          <td>Snap fit does not engage or breaks</td>
+          <td>Top and bottom casings do not secure</td>
+          <td>8</td>
+          <td>Incorrect geometry / brittle PLA at corners</td>
+          <td>3</td>
+          <td>Test fit check before FESTO run</td>
+          <td>4</td>
+          <td class="rpn-med">96</td>
+          <td>Validate snap fit in CAD. Apply chamfer lead-in as per drawing spec.</td>
+        </tr>
+        <tr>
+          <td>3D Printing</td>
+          <td>Support material fusion with part</td>
+          <td>Scarred surface — cosmetic and fit issue</td>
+          <td>6</td>
+          <td>Incompatible support material / Z distance</td>
+          <td>4</td>
+          <td>Post-print inspection</td>
+          <td>4</td>
+          <td class="rpn-med">96</td>
+          <td>Use PETG interface with tree supports at 0mm Z distance.</td>
+        </tr>
+        <tr>
+          <td>Inspection</td>
+          <td>Casing below minimum height tolerance</td>
+          <td>Fail at FESTO Measuring Station — line stoppage</td>
+          <td>7</td>
+          <td>Thermal contraction / printer calibration drift</td>
+          <td>4</td>
+          <td>Laser check at FESTO Station 2</td>
+          <td>3</td>
+          <td class="rpn-med">84</td>
+          <td>Apply scaling correction in slicer. Introduce pre-FESTO caliper check.</td>
+        </tr>
+        <tr>
+          <td>Press Station</td>
+          <td>Casing cracks under press force</td>
+          <td>Part scrapped — production stoppage</td>
+          <td>9</td>
+          <td>Insufficient wall thickness / low infill</td>
+          <td>2</td>
+          <td>Visual inspection post-press</td>
+          <td>4</td>
+          <td class="rpn-low">72</td>
+          <td>Maintain 20% infill minimum. Verify wall thickness against drawing.</td>
+        </tr>
+        <tr>
+          <td>Oven Station</td>
+          <td>PLA deformation under heat</td>
+          <td>Dimensional change post-assembly — product fails</td>
+          <td>7</td>
+          <td>PLA glass transition (~60°C) exceeded</td>
+          <td>2</td>
+          <td>Oven temp monitoring</td>
+          <td>3</td>
+          <td class="rpn-low">42</td>
+          <td>Verify oven temp is below PLA glass transition. Consider PETG if >55°C.</td>
+        </tr>
+      </tbody>
+    </table>
+    <figcaption>Figure 2 — PFMEA for the Phones-R-Us casing manufacturing process. RPN: red ≥200 (high), amber 50–199 (medium), green &lt;50 (low).</figcaption>
+  </div>
+
+  <p>The two highest RPN items are warping during 3D printing (RPN 288) and multi-supplier dimensional incompatibility (RPN 200). The warping issue was directly observed and resolved in this project through the switch from the open-frame Prusa MK3S to the enclosed Bambu Labs P1S. The multi-supplier compatibility issue was experienced during the FESTO lab session and highlights the importance of tightly controlled tolerances and First Article Inspection across all suppliers.</p>
+
+  <h2>Business Model Canvas</h2>
+  <p>The Business Model Canvas frames the Phones-R-Us production scenario within a standard commercial framework (Osterwalder and Pigneur, 2010), identifying the key elements of the business model relevant to this manufacturing project.</p>
+
+  <div class="chart-container" style="padding:16px;">
+    <div style="text-align:center;margin-bottom:10px;">
+      <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-400);font-weight:500;">Business Model Canvas — Phones-R-Us Modular Phone Production</span>
+    </div>
+    <div class="bmc-grid">
+      <div class="bmc-cell span2">
+        <h4>Key Partners</h4>
+        <ul>
+          <li>PLA filament suppliers</li>
+          <li>3D printer manufacturers (Bambu Lab, Prusa Research)</li>
+          <li>PCB and electronics component suppliers</li>
+          <li>Casing manufacturers (this project)</li>
+          <li>FESTO assembly line operators</li>
+        </ul>
+      </div>
+      <div class="bmc-cell">
+        <h4>Key Activities</h4>
+        <ul>
+          <li>3D printing of top &amp; bottom casings</li>
+          <li>Dimensional inspection &amp; QC</li>
+          <li>FESTO CP line assembly</li>
+          <li>Plant simulation &amp; capacity planning</li>
+          <li>Supplier coordination</li>
+        </ul>
+      </div>
+      <div class="bmc-cell span2" style="background:#f4f4f0;">
+        <h4>Value Propositions</h4>
+        <ul>
+          <li>Modular phone — customisable by end user</li>
+          <li>Rapid design iteration via additive manufacturing</li>
+          <li>Scalable production to 50,000+ units/year</li>
+          <li>Industry 4.0 digital manufacturing process</li>
+          <li>No tooling cost for design changes</li>
+        </ul>
+      </div>
+      <div class="bmc-cell">
+        <h4>Customer Relationships</h4>
+        <ul>
+          <li>B2B supply contract</li>
+          <li>Regular quality reporting</li>
+          <li>First Article Inspection sign-off</li>
+          <li>Continuous improvement</li>
+        </ul>
+      </div>
+      <div class="bmc-cell">
+        <h4>Key Resources</h4>
+        <ul>
+          <li>70× Bambu P1S printers</li>
+          <li>FESTO CP assembly line</li>
+          <li>Tecnomatix Plant Simulation</li>
+          <li>Fusion 360 CAD</li>
+          <li>Inspection equipment</li>
+        </ul>
+      </div>
+      <div class="bmc-cell">
+        <h4>Channels</h4>
+        <ul>
+          <li>Direct B2B supply to Phones-R-Us</li>
+          <li>Batch delivery to production schedule</li>
+          <li>Digital documentation &amp; traceability</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bmc-footer">
+      <div class="bmc-footer-cell">
+        <h4>Cost Structure</h4>
+        <ul>
+          <li>Capital: 70× Bambu P1S (~£63,000–£70,000)</li>
+          <li>PLA filament (~£22–24/kg per printer)</li>
+          <li>Energy: 70 printers running continuously</li>
+          <li>Labour: operators &amp; quality inspectors</li>
+          <li>Facility space for 70-printer farm</li>
+          <li>Maintenance &amp; printer depreciation</li>
+          <li>Software licences</li>
+        </ul>
+      </div>
+      <div class="bmc-footer-cell">
+        <h4>Revenue Streams</h4>
+        <ul>
+          <li>Per-unit supply price to Phones-R-Us</li>
+          <li>Volume contract: 50,000+ units/year</li>
+          <li>Premium for rapid design iteration service</li>
+          <li>Revenue from spare production capacity</li>
+        </ul>
+      </div>
+    </div>
+    <figcaption>Figure 3 — Business Model Canvas for the Phones-R-Us modular phone casing manufacturing operation</figcaption>
+  </div>
+
+  <p>The Business Model Canvas highlights that the cost structure is heavily weighted toward capital expenditure on 70 printers and ongoing operational costs. At 50,000 units per year the per-unit cost of 3D printed casings is significantly higher than injection moulded equivalents — the key commercial justification is the modular, design-flexible value proposition, which allows Phones-R-Us to iterate on casing designs without tooling cost or lead time. This advantage diminishes as volumes scale, reinforcing the earlier recommendation that injection moulding should be considered beyond a certain volume threshold.</p>
+
+  <div class="callout">
+    <div class="callout-label">References</div>
+    <p>1. Dittmann, L., Rademacher, T. and Zelewski, S. (2004) 'Performing FMEA using ontologies', <em>18th International Workshop on Qualitative Reasoning</em>, Evanston, USA, pp. 209–216.</p>
+    <p>2. Hofig, K., Zeller, M. and Adler, R. (2019) 'A Meta-Model for Process Failure Mode and Effects Analysis (PFMEA)', <em>24th IEEE International Conference on Emerging Technologies and Factory Automation (ETFA)</em>. IEEE, pp. 1199–1202.</p>
+    <p>3. Osterwalder, A. and Pigneur, Y. (2010) <em>Business Model Generation</em>. New Jersey: John Wiley and Sons.</p>
+    <p>4. Womack, J.P. and Jones, D.T. (2003) <em>Lean Thinking: Banish Waste and Create Wealth in Your Corporation</em>. 2nd edn. New York: Free Press.</p>
+  </div>
+
 </div>
+
 <div class="post-nav">
   <a href="post4.html" class="post-nav-link"><div class="nav-dir">← Previous post</div><div class="nav-title">Inside the Assembly Line: Observing the FESTO CP Lab</div></a>
-  <a href="post6.html" class="post-nav-link" style="text-align:right;"><div class="nav-dir">Next post →</div><div class="nav-title">From 9,030 to 52,220: Optimising the Simulation</div></a>
+  <a href="post6.html" class="post-nav-link" style="text-align:right;"><div class="nav-dir">Next post →</div><div class="nav-title">Building the Virtual Factory in Tecnomatix</div></a>
 </div>
 <footer><p>6E7V0013 Digital Manufacturing — Manchester Metropolitan University</p><p>Your Name · 2026</p></footer>
-</body></html>
+</body>
+</html>
