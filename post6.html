@@ -92,7 +92,7 @@
 
 <p>The initial simulation was built to replicate the FESTO CP assembly line in isolation — before the 3D printing stage was introduced. The model consists of six <strong>SingleProc</strong> objects representing each assembly station, connected in sequence by conveyors. A <strong>Source</strong> object feeds parts into the line and a <strong>Drain</strong> at the end counts completed phones. The <strong>ShiftCalendar</strong> was configured to run 9:00–17:00, Monday to Friday, with two break periods, over 48 working weeks, representing a standard single-shift factory operation. A <strong>WorkerPool</strong> object was included to represent the assembly line operators, and a <strong>BottleneckAnalyzer</strong> was added to automatically identify the slowest station during the simulation run. The <strong>Chart</strong> object provides a visual Resource Statistics breakdown showing the percentage of time each station spends working, waiting, paused, and blocked. The simulation was set to run for <strong>365 days</strong> to generate annual output figures directly comparable to the 50,000 phones/year target.</p>
 
-  <img src="Shift.jpg" alt="First Plant Simulation setup showing the FESTO assembly line without the 3D printer" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+  <img src="Shift.jpg" alt="First Plant Simulation setup showing the FESTO assembly line without the 3D printer" style="width:75%; border-radius:4px; margin:32px auto; display:block;">
 <figcaption>Figure 2 — Shift Calender</figcaption>
   
 <h2>Station Times for Simulation</h2>
