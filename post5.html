@@ -77,7 +77,7 @@
 <div class="post-body">
 
   <h2>Introduction</h2>
-  <p>Before committing to a manufacturing process or production system, it is essential to analyse and model it using structured engineering tools. These tools allow potential problems to be identified and resolved before they occur in a real factory — a core principle of digital manufacturing and Industry 4.0. This post documents four key process analysis tools applied to the Phones-R-Us production scenario: <strong>Takt Time</strong> analysis to verify whether the process can meet customer demand, a <strong>Value Stream Map</strong> to visualise the end-to-end flow, a <strong>Process Failure Mode and Effects Analysis (PFMEA)</strong> to identify and mitigate risks, and a <strong>Business Model Canvas</strong> to frame the wider commercial context. Dittmann et al. (2004) describe PFMEA as a formalised analytical method originating in the NASA Apollo Project, used to identify failures during the planning phase before production begins — making it particularly suited to this project where the consequences of dimensional failure at the FESTO line are directly observable.</p>
+  <p>Before committing to a manufacturing process or production system, it is essential to analyse and model it using structured engineering tools. These tools allow potential problems to be identified and resolved before they occur in a real factory; a core principle of digital manufacturing and Industry 4.0. This post documents four key process analysis tools applied to the Phones-R-Us production scenario: <strong>Takt Time</strong> analysis to verify whether the process can meet customer demand, a <strong>Value Stream Map</strong> to visualise the end-to-end flow, a <strong>Process Failure Mode and Effects Analysis (PFMEA)</strong> to identify and mitigate risks, and a <strong>Business Model Canvas</strong> to frame the wider commercial context. Dittmann et al. (2004) describe PFMEA as a formalised analytical method originating in the NASA Apollo Project, used to identify failures during the planning phase before production begins, making it particularly suited to this project where the consequences of dimensional failure at the FESTO line are directly observable.</p>
 
   <h2>Takt Time</h2>
   <p>Takt time is the maximum time allowed to produce one unit in order to meet customer demand. It is calculated by dividing the available production time by the required output. For Phones-R-Us, the target is 50,000 phones per year on a standard 8-hour shift, 5 days per week, over 48 working weeks per year.</p>
@@ -92,10 +92,10 @@
     <div class="lbl">Takt Time — one phone must be completed every 138.2 seconds to meet demand</div>
   </div>
 
-  <p>The takt time of <strong>138.2 seconds</strong> is significantly longer than the FESTO assembly line bottleneck of 29 seconds (Oven Station), confirming the line has ample capacity to meet the 50,000/year target on a single shift. However, the 3D printing stage at 2 hours (7,200 seconds) per casing vastly exceeds the takt time — requiring 70 printers running in parallel to bring the effective print takt time into line with demand. This confirms that takt time analysis must be applied across the entire value stream rather than individual operations in isolation.</p>
+  <p>The takt time of <strong>138.2 seconds</strong> is significantly longer than the FESTO assembly line bottleneck of 29 seconds (Oven Station), confirming the line has ample capacity to meet the 50,000/year target on a single shift. However, the 3D printing stage at 2 hours (7,200 seconds) per casing vastly exceeds the takt time, requiring 70 printers running in parallel to bring the effective print takt time into line with demand. This confirms that takt time analysis must be applied across the entire value stream rather than individual operations in isolation.</p>
 
   <h2>Value Stream Map</h2>
-  <p>The Value Stream Map below visualises the complete production flow from PLA filament supply through 3D printing, quality inspection, FESTO assembly, and final output — highlighting where value is added and where waste exists.</p>
+  <p>The Value Stream Map below visualises the complete production flow from PLA filament supply through 3D printing, quality inspection, FESTO assembly, and final output, highlighting where value is added and where waste exists.</p>
 
   <div class="chart-container">
     <div style="overflow-x:auto;">
@@ -189,10 +189,10 @@
     <figcaption>Figure 1 — Value Stream Map for the Phones-R-Us phone casing production process</figcaption>
   </div>
 
-  <p>The VSM clearly shows that the 3D printing stage dominates the production lead time at 2 hours per casing, while the entire FESTO assembly process adds only 92 seconds of value. The primary source of waste in the system is the wait time between the printing farm and the assembly line — a queue that only disappears when sufficient printers (70) are running to maintain continuous flow into the FESTO line.</p>
+  <p>The VSM clearly shows that the 3D printing stage dominates the production lead time at 2 hours per casing, while the entire FESTO assembly process adds only 92 seconds of value. The primary source of waste in the system is the wait time between the printing farm and the assembly line; a queue that only disappears when sufficient printers (70) are running to maintain continuous flow into the FESTO line.</p>
 
   <h2>Process Failure Mode & Effects Analysis (PFMEA)</h2>
-  <p>The PFMEA below identifies key potential failure modes across the production process, assessing each for Severity (S), Occurrence (O), and Detectability (D) on a 1–10 scale as defined by the AIAG standard used in the university template. The Risk Priority Number (RPN = S × O × D) determines priority for corrective action. Hofig et al. (2019) note that PFMEA is particularly valuable for multi-stage processes where failure in one stage propagates downstream — directly applicable here where a dimensionally inaccurate casing will halt the FESTO line at the Measuring Station.</p>
+  <p>The PFMEA below identifies key potential failure modes across the production process, assessing each for Severity (S), Occurrence (O), and Detectability (D) on a 1–10 scale as defined by the AIAG standard used in the university template. The Risk Priority Number (RPN = S × O × D) determines priority for corrective action. Hofig et al. (2019) note that PFMEA is particularly valuable for multi-stage processes where failure in one stage propagates downstream, directly applicable here where a dimensionally inaccurate casing will halt the FESTO line at the Measuring Station.</p>
 
   <div class="chart-container" style="padding:16px;">
     <table class="pfmea-table">
@@ -406,7 +406,7 @@
     <figcaption>Figure 3 — Business Model Canvas for the Phones-R-Us modular phone casing manufacturing operation</figcaption>
   </div>
 
-  <p>The Business Model Canvas highlights that the cost structure is heavily weighted toward capital expenditure on 70 printers and ongoing operational costs. At 50,000 units per year the per-unit cost of 3D printed casings is significantly higher than injection moulded equivalents — the key commercial justification is the modular, design-flexible value proposition, which allows Phones-R-Us to iterate on casing designs without tooling cost or lead time. This advantage diminishes as volumes scale, reinforcing the earlier recommendation that injection moulding should be considered beyond a certain volume threshold.</p>
+  <p>The Business Model Canvas highlights that the cost structure is heavily weighted toward capital expenditure on 70 printers and ongoing operational costs. At 50,000 units per year the per-unit cost of 3D printed casings is significantly higher than injection moulded equivalents; the key commercial justification is the modular, design-flexible value proposition, which allows Phones-R-Us to iterate on casing designs without tooling cost or lead time. This advantage diminishes as volumes scale, reinforcing the earlier recommendation that injection moulding should be considered beyond a certain volume threshold.</p>
 
   <div class="callout">
     <div class="callout-label">References</div>
