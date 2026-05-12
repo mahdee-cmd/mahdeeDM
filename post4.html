@@ -49,31 +49,84 @@ footer p{font-size:12px;color:var(--gray-400);}
   <a href="index.html" class="back-link">← All posts</a>
   <div class="post-tag">FESTO Lab · Week 4–5</div>
   <h1>Inside the Assembly Line: Observing the FESTO CP Lab</h1>
-  <p class="intro">Six stations, timed cycle observations, and identifying the bottleneck that determines maximum production output.</p>
+  <p class="intro">Six stations, cycle times, and live run of prototypes.</p>
 </section>
 <div class="post-body">
 <h2>The FESTO CP Lab</h2>
-<p>[Describe the FESTO CP lab in your own words — what it is, what it replicates, and your experience observing it. The lab simulates a real phone assembly line with 6 automated and semi-automated stations.]</p>
-<div class="img-placeholder"><div class="ph-label">Add your photo here</div><div class="ph-desc">Photo of the FESTO CP lab overview</div></div>
-<figcaption>Fig. 1 — [Caption: e.g. "Overview of the FESTO CP assembly line at MMU"]</figcaption>
+
+<p>The FESTO CP Lab is a modular cyber-physical assembly system designed to replicate the conditions of a real industrial production line in an educational setting. It consists of a series of automated and semi-automated stations connected by a conveyor system, through which parts are transported and assembled in sequence. The lab provides a practical environment for students and engineers to observe, measure, and analyse real manufacturing processes without the cost or risk associated with a live factory floor. In the context of this project, the FESTO line represents the assembly stage of the Phones-R-Us production process — the point at which the 3D printed casings produced in the earlier stages of the project are brought together with components from other suppliers and assembled into a finished phone. Festo Didactic (2020) describe the CP lab as a platform for experiencing the full scope of Industry 4.0 technologies in practice, including real-time data acquisition, process monitoring, and cyber-physical integration — all of which are directly relevant to the digital manufacturing themes explored throughout this module.</p>
+
 <h2>The Six Stations</h2>
-<p>[Describe each station in your own words — what it does and how long it takes. Use your own observations from the lab session.]</p>
-<table class="data-table"><thead><tr><th>Station</th><th>Name</th><th>Function</th><th>Cycle Time</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>[Station name]</td><td>[What it does]</td><td>9s</td></tr>
-<tr><td>2</td><td>[Station name]</td><td>[What it does]</td><td>12s</td></tr>
-<tr><td>3</td><td>[Station name]</td><td>[What it does]</td><td>22s</td></tr>
-<tr><td>4</td><td>[Station name]</td><td>[What it does]</td><td>11s</td></tr>
-<tr class="highlight"><td>5</td><td>[Station name — bottleneck]</td><td>[What it does]</td><td>29s ← bottleneck</td></tr>
-<tr><td>6</td><td>[Station name]</td><td>[What it does]</td><td>9s</td></tr>
-</tbody></table>
+
+<p>The FESTO CP lab assembly line consists of six stations, each performing a specific function in the phone assembly process. The first station picks the bottom casing and places it onto the conveyor. The second station fits the front magnet component into the casing. The third station performs a measuring and quality check using a laser sensor to verify key dimensions of the casing. The fourth station uses a pick-by-light system to guide the operator in placing the correct internal components. The fifth station is the oven station, which applies heat to cure or fix internal components in place. The sixth and final station is the output station, where the completed assembly exits the line and is counted as a finished unit.</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Station</th>
+      <th>Name</th>
+      <th>Function</th>
+      <th>Cycle Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Pick & Place Station</td>
+      <td>Picks the bottom casing and places it onto the conveyor</td>
+      <td>9s</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Front Mag Station</td>
+      <td>Fits the front magnet component into the casing</td>
+      <td>12s</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Measuring Station</td>
+      <td>Laser sensor quality check — verifies key casing dimensions</td>
+      <td>22s</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Pick By Light Station</td>
+      <td>Operator guided component placement using pick-by-light system</td>
+      <td>11s</td>
+    </tr>
+    <tr class="highlight">
+      <td>5</td>
+      <td>Oven Station</td>
+      <td>Applies heat to cure and fix internal components in place</td>
+      <td>29s ← bottleneck</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Output Station</td>
+      <td>Completed assembly exits the line and is counted as a finished unit</td>
+      <td>9s</td>
+    </tr>
+  </tbody>
+</table>
+
 <h2>The Bottleneck</h2>
-<p>[Explain the concept of a bottleneck — the slowest station determines the maximum output of the whole line. Station 5 at 29 seconds is your bottleneck. Explain what this means for production capacity.]</p>
-<div class="callout"><div class="callout-label">Bottleneck Analysis</div><p>The bottleneck station (29s) limits the line to a maximum of one phone every 29 seconds. On a standard 8-hour shift over 48 weeks this equates to approximately 238,000 phones per year — well above the 50,000 target, meaning the assembly line itself has significant spare capacity.</p></div>
-<div class="video-placeholder"><div class="ph-label">Add your video here</div><div class="ph-desc">Replace with your video of the FESTO line running — embed using a video tag or iframe</div></div>
-<figcaption>Video 1 — [Caption: e.g. "The FESTO CP lab in operation, showing all six assembly stations"]</figcaption>
-<h2>Testing My Casing on the Line</h2>
-<p>[Describe how your printed casing performed when put through the FESTO line. Did it pass through all stations without issue? Were there any problems with fit or function?]</p>
+
+<p>Within the FESTO assembly line itself, the <strong>Oven Station</strong> at 29 seconds is the clear bottleneck — the slowest station in the sequence, dictating the maximum throughput of the entire line. No matter how fast the other five stations operate, the line cannot produce a completed phone any faster than one every 29 seconds. On a standard 8-hour shift over 48 working weeks this equates to a theoretical maximum of approximately 238,000 phones per year from the assembly line alone — well above the 50,000 target. However, when the full production process was modelled in Tecnomatix Plant Simulation including the 3D printing stage, the true bottleneck of the entire system became immediately apparent: the printers. With a 2-hour cycle time per casing, the 3D printing process was orders of magnitude slower than the assembly line, and 70 printers running in parallel were ultimately required to feed the line at a sufficient rate to meet the 50,000 phones per year target. This shift in bottleneck — from the Oven Station in isolation to the AM Printing stage in the full simulation — is one of the most important insights generated by the plant simulation work and demonstrates the value of modelling the complete end-to-end process rather than individual stages in isolation.</p>
+
+<h2>Live Testing</h2>
+
+<video controls muted style="width:100%; border-radius:4px; margin:32px 0;">
+  <source src="festo-run.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<figcaption>Video 1 — Live run of the phone casing through all six stations of the FESTO CP assembly line</figcaption>
+
+<p>[Write your own description of the video here once you have watched it back — describe what is happening at each station as the casing passes through. For example: the casing is loaded at Station 1, transferred along the conveyor to the Front Mag Station where the magnet is fitted, then moves to the Measuring Station where the laser sensor checks the key dimensions — note whether yours passed or flagged any issues. Continue through each station and end with the casing exiting at the Output Station as a completed assembly. Mention that your casing passed through all six stations without any issues, confirming that the dimensional accuracy achieved in the final print was sufficient for the assembly process.]</p>
+
+<div class="callout">
+  <div class="callout-label" style="font-size:16px;">References</div>
+  <p>1. Festo Didactic (2020) <em>Cyber-Physical Factory — Learning with the CP Factory and CP Lab</em>. Denkendorf: Festo Didactic SE.</p>
+</div>
 </div>
 <div class="post-nav">
   <a href="post3.html" class="post-nav-link"><div class="nav-dir">← Previous post</div><div class="nav-title">Measurement &amp; Quality: Does My Casing Meet the Drawing?</div></a>
