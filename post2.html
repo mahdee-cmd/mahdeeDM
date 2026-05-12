@@ -53,53 +53,87 @@ footer p{font-size:12px;color:var(--gray-400);}
   <p class="intro">Printer selection, print settings, failures encountered, and the real cost of additive manufacturing at scale.</p>
 </section>
 <div class="post-body">
-  <h2>Choosing the Right Printer</h2>
-  <p>The first prototype casing was printed on a Prusa MK3S, an open-frame FDM printer widely used in educational and prototyping environments. PLA filament was used across all prints due to its dimensional stability, ease of use, and suitability for functional prototypes. Gibson et al. (2015) note that PLA is one of the most widely used FDM materials due to its low warping tendency and good surface resolution relative to other thermoplastics, making it well suited to parts where fit and assembly are critical.</p>
- <img src="Prusa MK3S.jpg" alt="GA Drawing provided by the university" style="width:50%; border-radius:4px; margin:32px auto; display:block;">
-<figcaption style="font-size: 15px;">Fig. 1 — Prusa MK3S</figcaption>
-   <p>However, the initial Prusa print revealed two significant problems. The open-frame design of the MK3S offered no protection from ambient temperature fluctuations in the lab environment, which contributed to slight warping at the edges of the casing as it cooled unevenly on the bed. Additionally, the support structures generated for the overhanging features of the casing were poorly formed thick, difficult to remove, and leaving a rough surface finish on the areas they contacted. As a result of these issues, the decision was made to switch to a Bambu Labs P1S for all subsequent prints. The P1S is a high-speed enclosed FDM printer that eliminates the ambient temperature problem through its sealed chamber, and offers significantly better support structure quality through its multi-material and advanced slicing capabilities. The remaining four prints were all completed on the P1S, with measurable improvements in both dimensional accuracy and surface finish.</p>
-<img src="P1S.jpg" alt="GA Drawing provided by the university" style="width:50%; border-radius:4px; margin:32px auto; display:block;">
-  <figcaption style="font-size: 15px;">Fig. 2 — Bambu Labs P1S</figcaption>
+  <h2>Finalised CAD Model</h2>
+<p>The phone casing was designed in <strong>Fusion 360</strong>, a professional CAD software widely used in product design and engineering. The bottom casing was modelled using a combination of <strong>extrude</strong> operations to build up the main body geometry and <strong>chamfer</strong> operations to break sharp edges, improving both the aesthetic quality of the part and its printability by reducing stress concentrations at corners. The GA drawing provided by the university (Drawing No. 6E7V0013_01) was used as the reference throughout, with all key dimensions including the 114mm length, 60mm width, and critical interface features replicated as accurately as possible in the digital model.</p>
 
-  <h2>Print Settings & Process</h2>
-  <table class="data-table">
-    <thead><tr><th>Parameter</th><th>Value</th><th>Reason</th></tr></thead>
-    <tbody>
-<tr><td>Printer (Print 1)</td><td>Prusa MK3S</td><td>Initial prototype — open frame FDM</td></tr>
-<tr><td>Printer (Prints 2–5)</td><td>Bambu Labs P1S</td><td>Switched due to warping and support issues on Prusa</td></tr>
-<tr><td>Material</td><td>PLA</td><td>Dimensional stability, low warping, suitable for functional prototypes</td></tr>
-<tr><td>Layer height</td><td>0.2mm</td><td>Balance between surface finish quality and print speed</td></tr>
-<tr><td>Infill</td><td>15%</td><td>Good balance between material usage and print time</td></tr>
-<tr><td>Print time</td><td>2 hours</td><td>Measured from actual print on the P1S</td></tr>
-<tr><td>Bed temperature</td><td>55°C</td><td>Standard PLA bed adhesion</td></tr>
-<tr><td>Nozzle temperature</td><td>220°C</td><td>Standard PLA extrusion temperature</td></tr>
-<tr><td>Total prints</td><td>5 (1 Prusa, 4 Bambu)</td><td>Iterative process to refine dimensional accuracy and surface quality</td></tr>
-    </tbody>
-  </table>
+<img src="GA_Bottom.jpg" alt="GA Drawing of the bottom phone casing" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Fig. 1 — GA drawing of the bottom phone casing (Drawing No. 6E7V0013_01)</figcaption>
 
-  <h2>Problems & Solutions</h2>
-  <p><strong>Print 1 — Prusa MK3S: Warping and Support Issues</strong></p>
-<p>The first print on the Prusa MK3S encountered two problems immediately. The first was warping, the edges of the casing lifted slightly off the print bed during cooling, causing a dimensional deviation at the base of the part. This is a well-documented issue with open-frame FDM printers, where uncontrolled airflow and ambient temperature variation causes uneven thermal contraction across the part as it cools (Ngo et al., 2018). The second problem was support structure quality. The overhanging features of the phone casing required support material, and the supports generated by the Prusa's slicer were thick and poorly attached to the part, leaving a heavily scarred surface finish on the contact areas when removed. The combination of these two issues made the first print unsuitable for testing on the FESTO assembly line.</p>
-  <div class="img-placeholder"><div class="ph-label">Add your photo here</div><div class="ph-desc">Photo of a failed print or problem encountered</div></div>
-<figcaption style="font-size: 15px;">Fig. 2 — GA drawing of the top casing provided by Phones-R-Us</figcaption>
-  <p><strong>Prints 2–5 — Bambu Labs P1S: Refinement and Improvement</strong></p>
-</p>Switching to the Bambu Labs P1S resolved both of the Prusa's primary issues. The enclosed chamber eliminated ambient temperature variation, producing flat, warp-free parts from the second print onwards. Support quality also improved significantly, with cleaner detachment and less surface scarring. However, two new issues emerged across the Bambu prints. The first was surface finish, at 0.2mm layer height, visible layer lines remained on the outer faces of the casing. While functionally acceptable, this raised questions about aesthetic quality for a consumer product. Light sanding was applied to later prints to improve the finish without affecting print time. The second issue was dimensional accuracy — when tested on the FESTO assembly line, a laser measurement station identified that one area of the casing was just below the minimum specified height on the GA drawing. This was identified on the third print and corrected through a small scaling adjustment in the Bambu slicer software for prints four and five. This iterative approach mirrors the First Article Inspection (FAI) process used in real manufacturing, where the first parts off a new process are comprehensively measured before full production begins.</p>
+<img src="GA_Top.jpg" alt="GA Drawing of the top phone casing" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Fig. 2 — GA drawing of the top phone casing (DM Top Case Drawings)</figcaption>
 
-  <h2>Cost Analysis</h2>
-  <p>PLA filament costs approximately £20–25 per kilogram across both the Prusa MK3S and Bambu Labs P1S platforms, with Bambu-branded PLA sitting at the higher end at approximately £22–24 per kilogram. Based on standard PLA density of 1.24 g/cm³, material cost per casing is estimated at £something, it shows material usage in grams. Multiply grams used by £0.023 to get approximate cost per print]. Across five prototype prints the total material cost was modest. However, at full production scale of 50,000 units per year across 70 printers, material cost becomes a significant operational expenditure. The Bambu Labs P1S retails at approximately £900–1,000 per unit, meaning the capital cost of 70 machines alone would be in the region of £63,000–£70,000, before installation, maintenance, energy, and the facility space required to house them.</p>
+<p>The snap fit mechanism was a critical feature of the design, responsible for securing the top and bottom casings together without the need for screws or adhesives. This was modelled in Fusion 360 using a <strong>revolve</strong> operation, creating the curved cantilever profile of the snap fit arm around a central axis. The geometry was designed with a 135° chamfered lead-in angle as specified on the drawing, allowing the top casing to be pressed onto the bottom casing with controlled deflection before locking into place. Snap fit joints are a common feature in consumer electronics manufacturing due to their simplicity, low cost, and ease of assembly — all of which are directly relevant to the FESTO assembly line process (Bralla, 1999).</p>
 
-  <h2>Critical Reflection: Is 3D Printing Right for 50,000 Units/Year?</h2>
-  <p>The printer selection process in this project, starting with the Prusa MK3S and switching to the Bambu Labs P1S after the first print, reflects a real engineering decision-making process: identify a problem, evaluate alternatives, and implement a better solution. The switch resulted in measurable improvements across all subsequent prints, validating the decision.
-However, the more fundamental question for Phones-R-Us is whether FDM printing is the right process at 50,000 units per year regardless of which printer is used. For prototyping and small-batch production, additive manufacturing offers clear advantages, no tooling costs, rapid design iteration, and the flexibility to make changes between prints at no additional cost, as demonstrated across the five prints in this project. Kalpakjian and Schmid (2014) note that injection moulding, while requiring significant upfront tooling investment of typically £10,000–£100,000 per mould, produces parts in seconds rather than hours and at a substantially lower per-unit cost. At 50,000 units per year, the tooling cost would be amortised relatively quickly and the process would be far more economically efficient than operating 70 FDM printers continuously.
-That said, 3D printing retains one critical advantage for a modular phone manufacturer: design flexibility. If Phones-R-Us intends to release multiple casing variants or update designs frequently, the ability to change designs between prints with no tooling cost or lead time may justify the higher per-unit cost — particularly in the early stages of product development before volumes scale significantly.</p>
-  <div class="callout">
-    <div class="callout-label" style="font-size: 16px;">References</div>
-    <p>1. Gibson, I., Rosen, D. and Stucker, B. (2015) <em>Additive Manufacturing Technologies: 3D Printing, Rapid Prototyping, and Direct Digital Manufacturing</em>. 2nd edn. New York: Springer.</p>
+<img src="Snap_Fit.jpg" alt="Section analysis of the snap fit mechanism in Fusion 360" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Fig. 3 — Section analysis of the snap fit mechanism showing the cantilever profile and 135° lead-in chamfer</figcaption>
 
-<p>2. Kalpakjian, S. and Schmid, S. (2014) <em>Manufacturing Engineering and Technology</em>. 7th edn. Harlow: Pearson.</p>
+<h2>Manufacturing Method</h2>
 
-<p>3. Ngo, T.D., Kashani, A., Imbalzano, G., Nguyen, K.T.Q. and Hui, D. (2018) 'Additive Manufacturing (3D Printing): A Review of Materials, Methods, Applications and Challenges', <em>Composites Part B: Engineering</em>, 143, pp. 172–196.</p>
-  </div>
+<p>The first prototype was printed on a <strong>Prusa MK3S</strong>, an open-frame FDM printer widely used in educational and prototyping environments. The MK3S offers several strengths — it is reliable, well-documented, and produces dimensionally accurate parts under controlled conditions. However, its open-frame design is a notable weakness in a lab environment: without an enclosure, ambient temperature fluctuations cause uneven cooling across the part during printing, which contributed to warping at the edges of the first casing print. Support structure quality was also poor, leaving scarred surface finish on contact areas after removal. Prusa Research (2023) acknowledge that the open-frame design of the MK3S makes it less suitable for materials and geometries sensitive to thermal variation, and recommend enclosure additions for improved consistency.</p>
+
+<img src="Prusa MK3S.jpg" alt="Prusa MK3S printer" style="width:50%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Fig. 4 — The Prusa MK3S used for the first prototype print</figcaption>
+
+<p>Following the issues encountered on the Prusa, all subsequent prints were completed on a <strong>Bambu Labs P1S</strong>. The P1S is a high-speed enclosed FDM printer that addresses the primary weaknesses of the MK3S directly. The sealed chamber eliminates ambient temperature variation, producing consistently flat, warp-free parts. Print speeds are significantly faster than conventional FDM machines, and support structure quality is considerably improved through Bambu's advanced slicing algorithm. The main weakness of the P1S is cost — at approximately £900–1,000 per unit it represents a significantly higher capital investment than the MK3S, which is relevant when considering scaling to the 70 printers identified in the plant simulation. Bambu Lab (2023) describe the P1S as optimised for both prototyping and functional part production, citing its enclosed CoreXY architecture as the primary contributor to its dimensional consistency at high print speeds.</p>
+
+<img src="Bambu P1S.jpg" alt="Bambu Labs P1S printer" style="width:50%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Fig. 5 — The Bambu Labs P1S used for prints 2–5</figcaption>
+
+<h2>Print Settings</h2>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Value</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Material</td>
+      <td>PLA</td>
+      <td>Dimensional stability, low warping tendency, and suitable for functional prototypes</td>
+    </tr>
+    <tr>
+      <td>Layer height</td>
+      <td>0.2mm</td>
+      <td>Balance between surface finish quality and print speed — finer layers would double print time</td>
+    </tr>
+    <tr>
+      <td>Infill</td>
+      <td>20%</td>
+      <td>Sufficient structural integrity for a functional prototype without excessive material use</td>
+    </tr>
+    <tr>
+      <td>Print time</td>
+      <td>2 hours</td>
+      <td>Measured from actual print on the Bambu P1S — forms the basis of the plant simulation cycle time</td>
+    </tr>
+    <tr>
+      <td>Bed temperature</td>
+      <td>55°C</td>
+      <td>Standard PLA bed adhesion temperature on the Bambu textured PEI plate</td>
+    </tr>
+    <tr>
+      <td>Nozzle temperature</td>
+      <td>220°C</td>
+      <td>Standard PLA extrusion temperature on the Bambu P1S</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Critical Reflection: Is 3D Printing Right for 50,000 Units/Year?</h2>
+
+<p>The fundamental question for Phones-R-Us is whether FDM printing with PLA is the right manufacturing process at 50,000 units per year. For prototyping and small-batch production, additive manufacturing offers clear advantages — no tooling costs, rapid design iteration, and the ability to produce complex geometries such as the snap fit mechanism without specialist equipment. The iterative process used in this project, switching from the Prusa MK3S to the Bambu P1S and printing five versions in total, is a good example of this flexibility: design and process adjustments were made between prints with no additional tooling cost or lead time. However, at the volumes required by this project the economics become less favourable. Kalpakjian and Schmid (2014) note that injection moulding, while requiring significant upfront tooling investment of typically £10,000–£100,000 per mould, produces parts in seconds rather than hours and at a substantially lower per-unit material cost. At 50,000 units per year the tooling cost would be amortised relatively quickly, and cycle times of under 60 seconds per part would dramatically reduce the number of machines required compared to the 70 printers identified in the simulation. That said, 3D printing retains one critical advantage for a modular phone manufacturer: design flexibility. If Phones-R-Us intends to release multiple casing variants or update designs frequently, the absence of tooling means changes can be implemented immediately at no additional cost — an advantage that may justify the higher per-unit cost in the early stages of production.</p>
+
+<div class="callout">
+  <div class="callout-label" style="font-size:16px;">References</div>
+  <p>1. Bambu Lab (2023) <em>P1S Product Overview</em>. Available at: https://bambulab.com/en/p1s (Accessed: May 2026).</p>
+  <p>2. Bralla, J.G. (1999) <em>Design for Manufacturability Handbook</em>. 2nd edn. New York: McGraw-Hill.</p>
+  <p>3. Kalpakjian, S. and Schmid, S. (2014) <em>Manufacturing Engineering and Technology</em>. 7th edn. Harlow: Pearson.</p>
+  <p>4. Prusa Research (2023) <em>Original Prusa MK3S+ Product Page</em>. Available at: https://www.prusa3d.com/product/original-prusa-i3-mk3s-3d-printer (Accessed: May 2026).</p>
+</div>
     
 </div>
 <footer><p>6E7V0013 Digital Manufacturing — Manchester Metropolitan University</p><p>Your Name · 2026</p></footer>
