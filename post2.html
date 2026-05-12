@@ -57,27 +57,27 @@ footer p{font-size:12px;color:var(--gray-400);}
 <p>The phone casing was designed in <strong>Fusion 360</strong>, a professional CAD software widely used in product design and engineering. The bottom casing was modelled using a combination of <strong>extrude</strong> operations to build up the main body geometry and <strong>chamfer</strong> operations to break sharp edges, improving both the aesthetic quality of the part and its printability by reducing stress concentrations at corners. The GA drawing provided by the university was used as the reference throughout, with all key dimensions including the 114mm length, 60mm width, and critical interface features replicated as accurately as possible in the digital model.</p>
 
 <img src="Back Phone Case.jpg" alt="GA Drawing of the bottom phone casing" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
-<figcaption>Fig. 1 — CAD model of bottom phone casing</figcaption>
+<figcaption style="font-size: 15px;">Fig. 1 — CAD model of bottom phone casing</figcaption>
 
 <img src="Front Phone Case.jpg" alt="GA Drawing of the top phone casing" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
-<figcaption>Fig. 2 — CAD model of top phone casing</figcaption>
+<figcaption style="font-size: 15px;">Fig. 2 — CAD model of top phone casing</figcaption>
 
 <p>The snap fit mechanism was a critical feature of the design, responsible for securing the top and bottom casings together without the need for screws or adhesives. This was modelled in Fusion 360 using a <strong>revolve</strong> operation, creating the curved cantilever profile of the snap fit arm around a central axis. The geometry was designed with a 135° chamfered lead-in angle as specified on the drawing, allowing the top casing to be pressed onto the bottom casing with controlled deflection before locking into place. Snap fit joints are a common feature in consumer electronics manufacturing due to their simplicity, low cost, and ease of assembly, all of which are directly relevant to the FESTO assembly line process (Bralla, 1999).</p>
 
 <img src="Snap Fit.jpg" alt="Section analysis of the snap fit mechanism in Fusion 360" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
-<figcaption>Fig. 3 — Section analysis of the snap fit mechanism</figcaption>
+<figcaption style="font-size: 15px;">Fig. 3 — Section analysis of the snap fit mechanism</figcaption>
 
 <h2>Manufacturing Method</h2>
 
 <p>The first prototype was printed on a <strong>Prusa MK3S</strong>, an open-frame FDM printer widely used in educational and prototyping environments. The MK3S offers several strengths; it is reliable, well-documented, and produces dimensionally accurate parts under controlled conditions. However, its open-frame design is a notable weakness in a lab environment: without an enclosure, ambient temperature fluctuations cause uneven cooling across the part during printing, which contributed to warping at the edges of the first casing print. Support structure quality was also poor, leaving scarred surface finish on contact areas after removal. Prusa Research (2023) acknowledge that the open-frame design of the MK3S makes it less suitable for materials and geometries sensitive to thermal variation, and recommend enclosure additions for improved consistency.</p>
 
 <img src="Prusa MK3S.jpg" alt="Prusa MK3S printer" style="width:50%; border-radius:4px; margin:32px auto; display:block;">
-<figcaption>Fig. 4 — The Prusa MK3S</figcaption>
+<figcaption style="font-size: 15px;">Fig. 4 — The Prusa MK3S</figcaption>
 
 <p>Following the issues encountered on the Prusa, all subsequent prints were completed on a <strong>Bambu Labs P1S</strong>. The P1S is a high-speed enclosed FDM printer that addresses the primary weaknesses of the MK3S directly. The sealed chamber eliminates ambient temperature variation, producing consistently flat, warp-free parts. Print speeds are significantly faster than conventional FDM machines, and support structure quality is considerably improved through Bambu's advanced slicing algorithm. The main weakness of the P1S is cost, at approximately £400–600 per unit it represents a high capital investment, which is relevant when considering scaling to the 70 printers identified in the plant simulation. Bambu Lab (2023) describe the P1S as optimised for both prototyping and functional part production, citing its enclosed CoreXY architecture as the primary contributor to its dimensional consistency at high print speeds.</p>
 
 <img src="P1S.jpg" alt="Bambu Labs P1S printer" style="width:50%; border-radius:4px; margin:32px auto; display:block;">
-<figcaption>Fig. 5 — The Bambu Labs P1S</figcaption>
+<figcaption style="font-size: 15px;">Fig. 5 — The Bambu Labs P1S</figcaption>
 
 <h2>Print Settings</h2>
 
