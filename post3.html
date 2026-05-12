@@ -52,24 +52,55 @@ footer p{font-size:12px;color:var(--gray-400);}
   <p class="intro">Dimensional inspection, process capability, and what supplier variability means in a real manufacturing context.</p>
 </section>
 <div class="post-body">
-<h2>Measurement Tools Used</h2>
-<p>[Describe the measurement tools you used — calipers, CMM, 3D scanner. Explain what each one measures and why you chose it.]</p>
-<div class="img-placeholder"><div class="ph-label">Add your photo here</div><div class="ph-desc">Photo of your measurement setup or tools</div></div>
-<figcaption>Fig. 1 — [Caption describing measurement being taken]</figcaption>
-<h2>Results: How Did My Casing Compare to the Drawing?</h2>
-<p>[Present your measurement results. Which dimensions were within tolerance? Which were out? By how much? Include a table of your key measurements vs the nominal drawing dimensions.]</p>
-<table class="data-table"><thead><tr><th>Dimension</th><th>Nominal (mm)</th><th>Measured (mm)</th><th>Tolerance</th><th>Pass/Fail</th></tr></thead>
-<tbody><tr><td>[Dimension 1]</td><td>[Value]</td><td>[Value]</td><td>[±Xmm]</td><td>[Pass/Fail]</td></tr>
-<tr><td>[Dimension 2]</td><td>[Value]</td><td>[Value]</td><td>[±Xmm]</td><td>[Pass/Fail]</td></tr>
-<tr><td>[Add more rows]</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table>
-<h2>Process Capability &amp; Consistency</h2>
-<p>[If you printed multiple casings — how consistent were they? Did the dimensions vary between prints? This is process capability — the ability of your process to repeatedly produce parts within tolerance.]</p>
-<h2>Supplier Variability</h2>
-<p>[Compare your casing to the master casing produced by another supplier. Were they interchangeable? What challenges did variability create?]</p>
-<div class="callout"><div class="callout-label">Key Insight</div><p>[Your own reflection — e.g. "Even though both casings were printed to the same drawing, the dimensional variation between my casing and the master casing highlighted how challenging it is to achieve true interchangeability in a multi-supplier environment without tightly controlled processes..."]</p></div>
-<h2>PFMEA</h2>
-<p>[Describe your Process Failure Mode and Effects Analysis — what could go wrong in your manufacturing process, how likely is it, how severe would the impact be, and how did you mitigate it?]</p>
+<h2>First Prototype</h2>
+
+<img src="prototype1.jpg" alt="First prototype printed on Prusa MK3S" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 1 — First prototype printed on the Prusa MK3S</figcaption>
+
+<p>The first prototype was printed on the <strong>Prusa MK3S</strong> using PLA filament. As shown in Figure 1, the surface finish of this print was poor — significant stringing was visible across the top surface, caused by the extruder travelling between features without retracting the filament sufficiently. The open-frame design of the Prusa offered no protection from ambient temperature fluctuations in the lab, which contributed to inconsistent extrusion and the stringing observed. When the top and bottom casings were assembled together, a slight gap was visible along the mating edge, indicating that warping had occurred during the print — the base of the casing had lifted slightly off the bed during cooling, causing a dimensional deviation that prevented a clean flush fit between the two halves. This first prototype was clearly not suitable for testing on the FESTO assembly line and highlighted the need for both a better printer and refined print settings before a functional casing could be produced.</p>
+
+<h2>Prototypes 2, 3 & 4</h2>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:32px 0;">
+  <div>
+    <img src="prototype2.jpg" alt="Prototype 2" style="width:100%; border-radius:4px;">
+    <figcaption style="margin-top:8px;">Figure 2 — Prototype 2</figcaption>
+  </div>
+  <div>
+    <img src="prototype3.jpg" alt="Prototype 3" style="width:100%; border-radius:4px;">
+    <figcaption style="margin-top:8px;">Figure 3 — Prototype 3</figcaption>
+  </div>
+  <div>
+    <img src="prototype4.jpg" alt="Prototype 4" style="width:100%; border-radius:4px;">
+    <figcaption style="margin-top:8px;">Figure 4 — Prototype 4</figcaption>
+  </div>
 </div>
+
+<p>Switching to the <strong>Bambu Labs P1S</strong> produced an immediate and significant improvement in print quality across prototypes 2, 3, and 4. The enclosed chamber eliminated the warping and stringing issues seen on the Prusa — parts came off the bed flat, with clean edges and no material trails between features. A key setting introduced on these prints was <strong>ironing</strong> on the top surface, which passes the nozzle back over the top layer at a reduced flow rate to smooth out any surface imperfections. An ironing speed of <strong>50mm/s</strong> and a flow rate of <strong>22%</strong> was used, producing a noticeably smoother top surface finish compared to the first prototype. There were no stringing issues and no bed adhesion problems across any of the three Bambu prints, confirming that the enclosed environment and improved slicer settings of the P1S resolved the primary issues identified on the Prusa.</p>
+
+<h2>Supports</h2>
+
+<img src="supports-prusa.jpg" alt="Support quality on the first Prusa print" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 5 — Support structures on the first Prusa print, showing poor detachment quality</figcaption>
+
+<p>The support structures generated for the first Prusa print were extremely difficult to remove. The default support settings produced thick, densely packed supports that had fused partially with the part surface during printing, meaning significant force was required to detach them. Even after removal, fragments of support material remained embedded in the surface, leaving a rough and visually unacceptable finish on the areas they had contacted.</p>
+
+<img src="supports-none.jpg" alt="Bambu print with no supports" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 6 — Bambu P1S print attempted without any support structures</figcaption>
+
+<p>A print was attempted on the Bambu P1S without any support structures to compare against the heavily supported Prusa print. The result was better than the Prusa in terms of surface cleanliness — without supports there was no scarring or residue on the part surface. However, the overhanging features of the casing showed visible layer sagging on the lower surfaces, and the layer lines were clearly visible, indicating that some form of support was still necessary to achieve a clean result on the more complex geometry of the casing.</p>
+
+<img src="supports-petg.jpg" alt="Final support setting using PETG interface with tree supports" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 7 — Final support configuration using PETG interface material with tree supports at 0mm Z distance</figcaption>
+
+<p>The optimal solution was found by using <strong>tree supports</strong> printed in <strong>PETG</strong> as an interface material, with a top Z distance of <strong>0mm</strong> — meaning the PETG support made direct contact with the PLA part surface with no gap between them. Because PETG and PLA do not bond to each other chemically, the interface peeled away cleanly and effortlessly after printing, leaving a fully smooth surface with no scarring, residue, or visible support marks. This method combined the structural benefit of full support coverage with the clean release properties of a dissimilar material interface, producing the best surface finish of any support configuration tested.</p>
+
+<h2>Final Print</h2>
+
+<img src="final-print.jpg" alt="Final prototype print" style="width:100%; border-radius:4px; margin:32px auto; display:block;">
+<figcaption>Figure 8 — Final prototype combining all optimised print settings</figcaption>
+
+<p>The final print brought together every lesson learned across the previous four iterations. The <strong>Bambu Labs P1S</strong> was used with PLA filament, ironing enabled at 50mm/s and 22% flow for a smooth top surface finish, and tree supports with a PETG interface at 0mm Z distance for clean, effortless support removal. The result was a dimensionally accurate casing with no warping, no stringing, a smooth top surface, and fully clean support contact areas. When assembled with the top casing, the snap fit engaged correctly with no visible gap at the mating edge — confirming that the warping issues from the first prototype had been fully resolved. This final print was the version taken forward for testing on the FESTO CP assembly line.</p>
 <div class="post-nav">
   <a href="post2.html" class="post-nav-link"><div class="nav-dir">← Previous post</div><div class="nav-title">Selecting a Process: 3D Printing the Phone Casing</div></a>
   <a href="post4.html" class="post-nav-link" style="text-align:right;"><div class="nav-dir">Next post →</div><div class="nav-title">Inside the Assembly Line: Observing the FESTO CP Lab</div></a>
